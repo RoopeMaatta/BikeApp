@@ -3,8 +3,8 @@
  */
 
 
-// define dependencenies - express
-// define express router
+const express = require("express"); // Import Express framework
+const router = express.Router(); // Create instance of Express router middleware
 
 // require other backendfiles
 
@@ -13,5 +13,13 @@
 // Enpoints - get, put, post , delete
 // 
 
-// exports - router
+// Create temporary test route
+router.get('/', (req, res) => {
+    res.send('Server is running! owo');
+  });
+
+
+
+
+module.exports = router; // export module to be used elsewhere
  
