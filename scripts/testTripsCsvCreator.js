@@ -5,6 +5,9 @@
 // Import file system tool module
 const fs = require("fs"); 
 
+// Import paths tool module
+const path = require("path");
+
 // Make array of test data:
 // Note the data has 20entries
 // one has a 'Covered distance (m)'< 10
@@ -47,8 +50,12 @@ const data = [
 // Convert data array to csv format
 const csv = data.map(row => row.join(',')).join('\n');
 
+// Specify the file path using path.join()
+const filePath = path.join(__dirname, '..', 'data', 'testTripsData.csv');
+
+
 // Write the csv data to a file
-fs.writeFile('testTripsData.csv', csv, err => {
+fs.writeFile(filePath, csv, err => {
   if (err) {
     console.error('Error writing to file:', err);
   } else {

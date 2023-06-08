@@ -1,7 +1,7 @@
 {
   "name": "bikeapp",
   "version": "1.0.0",
-  "description": "// How to run project",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
