@@ -2,7 +2,7 @@
  * Description: Creates a test .csv file to be used as base for test database entries.
  */
 
-// Import file system tool module
+// Import file system tools module
 const fs = require("fs"); 
 
 // Import paths tool module

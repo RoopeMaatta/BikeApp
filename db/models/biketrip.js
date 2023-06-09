@@ -7,7 +7,7 @@ const Sequelize = require("sequelize"); // Import sequelize orm module
 
 // export placeholder function for model definition
 module.exports = (sequelize, DataTypes) => {
-    class Biketrip extends Sequelize.model {}   // create subclass 
+    class Biketrip extends Sequelize.Model {}   // create subclass 
     
     Biketrip.init(
     // first object field definitions    

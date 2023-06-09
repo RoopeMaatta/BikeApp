@@ -34,6 +34,8 @@ const db = {
 };
 
 // add models to db: db.models.XXX require("modelspath/filename.js")
+db.models.Biketrip = require("./models/biketrip.js")(sequelize, Sequelize.DataTypes);
+
 
 // export db
 module.exports = db;
