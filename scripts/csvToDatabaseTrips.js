@@ -40,9 +40,9 @@ const importData = async () => {
                 departureTime: row['Departure'],
                 returnTime: row['Return'],
                 departureStationId: parseInt(row['Departure station id']),
-                // departureStationName: row['Departure station name'], // ommited due to assumption of perfomance optimization
+                // departureStationName: row['Departure station name'], // omitted due to assumption of perfomance optimization
                 returnStationId: parseInt(row['Return station id']),
-                // returnStationName: row['Return station name'],  // ommited due to assumption of perfomance optimization
+                // returnStationName: row['Return station name'],  // omitted due to assumption of perfomance optimization
                 coveredDistanceMeters: parseInt(row['Covered distance (m)']),
                 durationSeconds: parseInt(row['Duration (sec.)']),
               });

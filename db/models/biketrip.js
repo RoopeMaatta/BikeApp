@@ -101,8 +101,6 @@ module.exports = (sequelize, DataTypes) => {
         },
     }
     );
-    //Biketrip.removeAttribute('id');
-
     return Biketrip
 };
 

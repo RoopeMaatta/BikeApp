@@ -9,7 +9,7 @@ const Sequelize = require("sequelize"); // Import sequelize orm module
 const sequelize = new Sequelize({ // Make usable instance & pass configuration object parameters
     dialect: "sqlite",
     storage: path.join(__dirname, "../database.db"), // saves to current directory
-    // logging: false,
+    logging: false, // disable logging
     define: {
         timestamps: false,
     },
@@ -35,7 +35,7 @@ const db = {
 
 // add models to db: db.models.XXX require("modelspath/filename.js")
 db.models.Biketrip = require("./models/biketrip.js")(sequelize, Sequelize.DataTypes);
-
+db.models.Bikestation = require("./models/bikestation.js")(sequelize, Sequelize.DataTypes);
 
 // Synchronize the models with the database
 sequelize.sync()
