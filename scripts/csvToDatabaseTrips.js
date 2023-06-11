@@ -47,7 +47,7 @@ const importData = async () => {
                 durationSeconds: parseInt(row['Duration (sec.)']),
               });
             } catch (error) {
-              console.error('Error importing row:', error);
+              console.error('Error importing row:', row, error);
             }
           }
         })

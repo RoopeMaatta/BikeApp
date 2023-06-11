@@ -16,16 +16,6 @@ const sequelize = new Sequelize({ // Make usable instance & pass configuration o
 }); 
 
 
-// Immediately invokes a funtion to try and test connection to database
-(async () => {
-    try {
-      await sequelize.authenticate();
-      console.log('Connection to the database successful');
-    } catch (error) {
-      console.error('Error connecting to the database: ', error);
-    }
-  })();
-
 // Createted for exporting seqyalize module + instance + a models object that is to be filled
 const db = {
     sequelize,
@@ -37,8 +27,16 @@ const db = {
 db.models.Biketrip = require("./models/biketrip.js")(sequelize, Sequelize.DataTypes);
 db.models.Bikestation = require("./models/bikestation.js")(sequelize, Sequelize.DataTypes);
 
-// Synchronize the models with the database
-sequelize.sync()
+
+// Call associate methods: For each model in db.models that has an associate method, call that method with db.models as the argument.
+Object.values(db.models) // convert object into array
+  .filter(model => typeof model.associate === "function") // filter on only elements with associate methods
+  .forEach(model => model.associate(db.models)); // call fileterd method with db.models as argument = creates connection between db and associations
+
+
+
+// Synchronize the models with the database. In production environment generally best to use migrations for schema changes, especially in a production environment 
+sequelize.sync() //  takes an optional options object {force: true}, {alter: true}
   .then(() => {
     console.log('Database synchronized');
   })

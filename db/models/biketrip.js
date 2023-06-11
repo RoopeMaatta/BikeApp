@@ -7,7 +7,14 @@ const Sequelize = require("sequelize"); // Import sequelize orm module
 
 // export placeholder function for model definition
 module.exports = (sequelize, DataTypes) => {
-    class Biketrip extends Sequelize.Model {}   // create subclass 
+    class Biketrip extends Sequelize.Model {   // create subclass 
+      static associate(models) { // Create associations between models
+        this.belongsTo(models.Bikestation, { as: 'DepartureStation', foreignKey: 'departureStationId' }); // as = alias. used when fetching associated object. ForeignKey links to primaryKey = ID
+        this.belongsTo(models.Bikestation, { as: 'ReturnStation', foreignKey: 'returnStationId' });
+    }     
+    }  
+    
+
     
     Biketrip.init(
     // first object field definitions    
@@ -16,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         departureTime: {
             type: DataTypes.DATE,
             allowNull: false,
-            field: "Departure time",
+            //field: "Departure time",
             primaryKey: true,
         },
 
@@ -42,13 +49,13 @@ module.exports = (sequelize, DataTypes) => {
           returnTime: {
             type: DataTypes.DATE,
             allowNull: false,
-            field: "Return time",
+            //field: "Return time",
             primaryKey: true,
           },
           departureStationId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: "Departure station id",
+            //field: "Departure station id",
             primaryKey: true,
           }, 
         // Ommited due to getting the same data from departureStationId + Bikestations table  
@@ -59,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
           returnStationId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: "Return station id",
+            //field: "Return station id",
             primaryKey: true,
           },
         // Ommited due to getting the same data from departureStationId + Bikestations table 
@@ -70,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
           coveredDistanceMeters: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: "Covered distance (m)",
+            //field: "Covered distance (m)",
             validate: {
                 // (no distance < 10) handled in csv-parser script 
             },
@@ -78,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
           durationSeconds: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: "Duration (sec.)",
+            //field: "Duration (sec.)",
             validate: {
                 // (no duration < 10) handled in csv-parser script
             },
