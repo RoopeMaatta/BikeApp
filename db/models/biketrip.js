@@ -20,38 +20,49 @@ module.exports = (sequelize, DataTypes) => {
     // first object field definitions    
     {
         // Exclude the id column due optimization assumption - Primary key set to departure+return time&id
-        departureTime: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            //field: "Departure time",
-            primaryKey: true,
-        },
+        // Commented out due to use of Unix timestamsp for assumption of optimization
+        // departureTime: {
+        //     type: DataTypes.DATE,
+        //     allowNull: false,
+        //     //field: "Departure time",
+        //     primaryKey: true,
+        // },
 
         // Alternative For Departure time in Unix Time Stamp format
-      //   departureTime: {
-      //     type: DataTypes.BIGINT, // Store as big integer
-      //     allowNull: false,
-      //     field: "Departure",
-      //     primaryKey: true,
-      //     get() { // Convert Unix timestamp to Date when retrieving data
-      //         const unixTimestamp = this.getDataValue('departureTime');
-      //         return new Date(unixTimestamp * 1000);
-      //     },
-      //     set(value) { // Convert Date to Unix timestamp when storing data
-      //         if (!(value instanceof Date)) {
-      //             value = new Date(value + 'Z'); // Append 'Z' to indicate UTC
-      //         }
-      //         this.setDataValue('departureTime', Math.floor(value.getTime() / 1000));
-      //     }
-      // },
+        departureTime: {
+          type: DataTypes.BIGINT, // Store as big integer
+          allowNull: false,
+          primaryKey: true,
+          get() { // Convert Unix timestamp to Date when retrieving data
+              const unixTimestamp = this.getDataValue('departureTime');
+              return new Date(unixTimestamp * 1000);
+          },
+          set(value) { // Convert Date to Unix timestamp when storing data
+              if (!(value instanceof Date)) {
+                  value = new Date(value + 'Z'); // Append 'Z' to indicate UTC
+              }
+              this.setDataValue('departureTime', Math.floor(value.getTime() / 1000));
+          },
+        },
       
 
           returnTime: {
-            type: DataTypes.DATE,
+            type: DataTypes.BIGINT,
             allowNull: false,
             //field: "Return time",
             primaryKey: true,
+            get() { // Convert Unix timestamp to Date when retrieving data
+              const unixTimestamp = this.getDataValue('returnTime');
+              return new Date(unixTimestamp * 1000);
+            },
+            set(value) { // Convert Date to Unix timestamp when storing data
+              if (!(value instanceof Date)) {
+                  value = new Date(value + 'Z'); // Append 'Z' to indicate UTC
+              }
+              this.setDataValue('returnTime', Math.floor(value.getTime() / 1000));
+            },
           },
+
           departureStationId: {
             type: DataTypes.INTEGER,
             allowNull: false,
