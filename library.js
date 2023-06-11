@@ -5,49 +5,78 @@
 
 // Import database object
 const db = require('./db');
+// Import Op (Operators) object from sequelize package. gte(≥) and lte(≤) are used
+const { Op } = require('sequelize');
 
 
 /**
- * Finds all bike trips for a specific station and logs them to the console.
+ * Searches for bike trips in the database based on the given query parameters.
  *
- * @param {number} stationId - The ID of the station.
- * @param {'departureStationId'|'returnStationId'} type - The type of station (departure or return).
- * @returns {Promise<void>} Promise representing the operation.
- *
- * @example
- * findTripsByStation(4, 'departureStationId');
+ * @param {Object} query - The query parameters for the trip search.
+ * @param {number} query.departureStationId - The ID of the departure station.
+ * @param {number} query.returnStationId - The ID of the return station.
+ * @param {string} query.departureTime - The earliest departure time (YYYY-MM-DD).
+ * @param {string} query.returnTime - The latest return time (YYYY-MM-DD).
+ * @param {number} query.coveredDistanceMeters - The covered distance in meters.
+ * @param {number} query.durationSeconds - The duration of the trip in seconds.
+ * 
+ * @returns {Promise<string>} A promise that resolves with a JSON string of the found trips.
  */
 
-// Define query function
-const findTripsByStation = async (stationId, type) => {
-  // Validate type
-  if (!['departureStationId', 'returnStationId'].includes(type)) {
-    console.error('Invalid type. Use either "departureStationId" or "returnStationId".');
-    return;
-  }
+const findTrips = async (query) => {
+ // Destructuring assignment to get each value in query to it's own const
+  const {
+    departureStationId,
+    returnStationId,
+    departureTime,
+    returnTime,
+    coveredDistanceMeters,
+    durationSeconds
+  } = query;
 
-  // Query the database
+  // Construct the where clause. {} to be filled with key-value pairs
+  let where = {};
+  if (departureStationId) where.departureStationId = departureStationId;
+  if (returnStationId) where.returnStationId = returnStationId;
+  if (departureTime) where.departureTime = { [Op.gte]: new Date(departureTime) }; // gte = greater than or equal to
+  if (returnTime) where.returnTime = { [Op.lte]: new Date(returnTime) }; // lto = less than or equal to
+  if (coveredDistanceMeters) where.coveredDistanceMeters = coveredDistanceMeters;
+  if (durationSeconds) where.durationSeconds = durationSeconds;
+
+  // Query the database with where object as conditions
   const trips = await db.models.Biketrip.findAll({
-    where: {
-      [type]: stationId
+    where,
+    attributes: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds'],
+    include: [{
+      model: db.models.Bikestation,
+      as: 'DepartureStation', // as = alias for assosiation
+      attributes: [] // do not include extra attributes from model
     },
-    attributes: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds'], // Wanted columns data
-    include: [
-      {
-        model: db.models.Bikestation,
-        as: type === 'departureStationId' ? 'DepartureStation' : 'ReturnStation',
-        attributes: [] // No other attributes from Bikestation model
-      }
-    ]
+    {
+      model: db.models.Bikestation,
+      as: 'ReturnStation',
+      attributes: []
+    }]
   });
 
-  // Log the trips
-  console.log(`Found ${trips.length} trips from station ${stationId} as a ${type === 'departureStationId' ? 'departure' : 'return'} station.`);
-  trips.forEach(trip => {
-    console.log(trip.dataValues);
-});
+  // Prepare the trips data by getting only the dataValues from the query, and not wrapped in a instance of a Sequelize model
+  // trips(array of model instances) -> preparedTrips(array of dataValue)
+  const preparedTrips = trips.map(trip => trip.dataValues);
 
-}
+  // Convert the trips data to a JSON string
+  const jsonTrips = JSON.stringify(preparedTrips);
+
+  console.log(`Found ${trips.length} trips.`);
+  console.log(jsonTrips);
+
+  return jsonTrips;
+};
 
 // Usage example
-findTripsByStation(4, 'departureStationId');
+findTrips({
+  departureStationId: 116,
+  returnStationId: 117,
+  departureTime: '2021-04-31',
+  returnTime: '2021-07-01',
+});
+
