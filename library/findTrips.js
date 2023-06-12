@@ -18,7 +18,7 @@ const db = require('../db');
 const { Op } = require('sequelize');
 
 
-const findTrips = async (query) => {
+const findTrips = async (req, res, next) => {
  // Destructuring assignment to get each value in query to it's own const
   const {
     departureStationIds,
@@ -27,7 +27,7 @@ const findTrips = async (query) => {
     returnTime,
     coveredDistanceMeters,
     durationSeconds
-  } = query;
+  } = req.query;
 
   // Construct the where clause. {} to be filled with key-value pairs
   let where = {};
@@ -59,19 +59,20 @@ const findTrips = async (query) => {
   const preparedTrips = trips.map(trip => trip.dataValues);
 
   // Convert the trips data to a JSON string
-  const jsonTrips = JSON.stringify(preparedTrips);
+  //const jsonTrips = JSON.stringify(preparedTrips);
 
   console.log(`Found ${trips.length} trips.`);
-  console.log(jsonTrips);
+  // console.log(jsonTrips);
 
-  return jsonTrips;
+  res.json(preparedTrips);
 };
 
-// Usage example
-findTrips({
-  departureStationIds: [116,147],
-  returnStationIds: [17, 232],
-  //departureTime: '2021-04-31',
-  //returnTime: '2021-07-01',
-});
+// // Usage example
+// findTrips({
+//   departureStationIds: [116,147],
+//   returnStationIds: [17, 232],
+//   //departureTime: '2021-04-31',
+//   //returnTime: '2021-07-01',
+// });
 
+module.exports = { findTrips };

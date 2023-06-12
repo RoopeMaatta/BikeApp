@@ -6,6 +6,9 @@
 const express = require("express"); // Import Express framework
 const router = express.Router(); // Create instance of Express router middleware
 
+const apiRoutes = require('./api'); // Import api.js
+router.use('/api', apiRoutes); // mount the api routes any request starting with /api will be handled by api.js. 
+
 // require other backendfiles
 
 // async try-catch handler middleware
@@ -18,6 +21,9 @@ router.get('/', (req, res) => {
     res.send('Server is running! owo');
   });
 
+
+
+  
 
 
 

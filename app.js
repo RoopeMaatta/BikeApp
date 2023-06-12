@@ -6,16 +6,12 @@
 const express = require("express"); // Import Express framework
 const app = express(); // Make instance of Express
 
-
-const routes = require("./routes"); // Import module from routes path to routes
+const routes = require("./routes/index"); // Import module from routes/index to routes
 app.use("/", routes); // Use/mount routes module
 
 
 // use instances of above
 // error handling
-
-
-
 
 
 // Start the server
