@@ -1,15 +1,4 @@
 /**
- * description: library of used functions
- */
-
-
-// Import database object
-const db = require('./db');
-// Import Op (Operators) object from sequelize package. gte(≥) and lte(≤) are used
-const { Op } = require('sequelize');
-
-
-/**
  * Searches for bike trips in the database based on the given query parameters.
  *
  * @param {Object} query - The query parameters for the trip search.
@@ -22,6 +11,12 @@ const { Op } = require('sequelize');
  * 
  * @returns {Promise<string>} A promise that resolves with a JSON string of the found trips.
  */
+
+// Import database object
+const db = require('../db');
+// Import Op (Operators) object from sequelize package. gte(≥) and lte(≤) are used
+const { Op } = require('sequelize');
+
 
 const findTrips = async (query) => {
  // Destructuring assignment to get each value in query to it's own const
