@@ -2,8 +2,8 @@
  * Searches for bike trips in the database based on the given query parameters.
  *
  * @param {Object} query - The query parameters for the trip search.
- * @param {number} query.departureStationId - The ID of the departure station.
- * @param {number} query.returnStationId - The ID of the return station.
+ * @param {number[]} query.departureStationId - The IDs of the departure stations.
+ * @param {number[]} query.returnStationId - The IDs of the return stations.
  * @param {string} query.departureTime - The earliest departure time (YYYY-MM-DD).
  * @param {string} query.returnTime - The latest return time (YYYY-MM-DD).
  * @param {number} query.coveredDistanceMeters - The covered distance in meters.
@@ -21,8 +21,8 @@ const { Op } = require('sequelize');
 const findTrips = async (query) => {
  // Destructuring assignment to get each value in query to it's own const
   const {
-    departureStationId,
-    returnStationId,
+    departureStationIds,
+    returnStationIds,
     departureTime,
     returnTime,
     coveredDistanceMeters,
@@ -31,8 +31,8 @@ const findTrips = async (query) => {
 
   // Construct the where clause. {} to be filled with key-value pairs
   let where = {};
-  if (departureStationId) where.departureStationId = departureStationId;
-  if (returnStationId) where.returnStationId = returnStationId;
+  if (departureStationIds) where.departureStationId = { [Op.in]: departureStationIds }; // Op.in any value within array of values
+  if (returnStationIds) where.returnStationId = { [Op.in]: returnStationIds };
   if (departureTime) where.departureTime = { [Op.gte]: new Date(departureTime) }; // gte = greater than or equal to
   if (returnTime) where.returnTime = { [Op.lte]: new Date(returnTime) }; // lto = less than or equal to
   if (coveredDistanceMeters) where.coveredDistanceMeters = coveredDistanceMeters;
@@ -69,9 +69,9 @@ const findTrips = async (query) => {
 
 // Usage example
 findTrips({
-  departureStationId: 116,
-  returnStationId: 117,
-  departureTime: '2021-04-31',
-  returnTime: '2021-07-01',
+  departureStationIds: [116,147],
+  returnStationIds: [17, 232],
+  //departureTime: '2021-04-31',
+  //returnTime: '2021-07-01',
 });
 
