@@ -5,21 +5,32 @@
 
 const express = require("express"); // Import Express framework
 const router = express.Router(); // Create instance of Express router middleware
+const path = require("path"); // import filepath module
 
 const apiRoutes = require('./api'); // Import api.js
 router.use('/api', apiRoutes); // mount the api routes any request starting with /api will be handled by api.js. 
 
+
 // require other backendfiles
 
-// async try-catch handler middleware
+// Handler function to wrap each route
+function asyncHandler(cb){
+  return async(req, res, next) => {
+    try {
+      await cb(req, res, next)
+    } catch(error){
+      // Forward error to the global error handler
+      next(error);
+    }
+  }
+}
 
 // Enpoints - get, put, post , delete
-// 
 
-// Create temporary test route
-router.get('/', (req, res) => {
-    res.send('Server is running! owo');
-  });
+// Serve the homepage
+router.get('/', asyncHandler((req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+}));
 
 
 
