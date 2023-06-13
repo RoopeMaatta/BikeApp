@@ -3,8 +3,10 @@
  */
 
 const { findTrips } = require('./findTrips');
+const { findTripsValidation, validate } = require('./validation');
 
 module.exports = {
     findTrips,
-    // ... export other functions or classes
+    findTripsValidation,
+    validate
   };
