@@ -34,16 +34,18 @@ const findTrips = async (req, res, next) => {
    if (returnStationIds) where.returnStationId = { [Op.in]: returnStationIds };
    if (departureTime) where.departureTime = { [Op.gte]: new Date(departureTime) }; // gte = greater than or equal to
    if (returnTime) where.returnTime = { [Op.lte]: new Date(returnTime) }; // lto = less than or equal to
+   let distance = Number(coveredDistanceMeters); // make shure is number
    if (coveredDistanceMeters) {
     where.coveredDistanceMeters = {
-      [Op.gte]: coveredDistanceMeters - 100, // query searches for trips within +/- 100m range
-      [Op.lte]: coveredDistanceMeters + 100, 
+      [Op.gte]: distance - 100, // query searches for trips within +/- 100m range
+      [Op.lte]: distance + 100, 
     };
   }
+  let duration = Number(durationSeconds); // make shure is number
   if (durationSeconds) {
     where.durationSeconds = {
-      [Op.gte]: durationSeconds - 30, // query searches for trips within +/- 30s range
-      [Op.lte]: durationSeconds + 30, 
+      [Op.gte]: duration - 30, // query searches for trips within +/- 30s range
+      [Op.lte]: duration + 30, 
     };
   }
 
