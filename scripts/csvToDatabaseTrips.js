@@ -49,6 +49,8 @@ const importData = async () => {
             } catch (error) {
               console.error('Error importing row:', row, error);
             }
+          } else {
+            console.log(row)
           }
         })
         .on('end', () => {
