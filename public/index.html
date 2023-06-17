@@ -1,234 +1,50 @@
 <!--  -->
 <!-- Description: Primary structure and contents of webpage    -->
 <!--  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find Trips</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-
-
- <!-- Input fields for parameters -->
- <style>
-  .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-  }
-
-  .container2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-  }
-
-  </style>
-
-
-
   
+  
+  <!-- Input fields for parameters -->
   <div class="container">
-      <input id="departureStationIds" type="text" placeholder="Departure station IDs (comma-separated)">
-      <input id="returnStationIds" type="text" placeholder="Return station IDs (comma-separated)">
-      <input id="departureTime" type="text" placeholder="Departure time (yyyy-mm-dd)">
-      <input id="returnTime" type="text" placeholder="Return time (yyyy-mm-dd)">
-      <input id="coveredDistanceMeters" type="text" placeholder="Covered distance (meters)">
-      <input id="durationSeconds" type="text" placeholder="Duration (seconds)">
-
-    </div>
-
-    <div class="container2">
-<!-- Find Trips button -->
-<p id="foundTripsHintText">Find Trips</p>
-<button id="findTripsButton">Find Trips</button>
-    </div>
-
-
-    
-
-
-<div> 
-
-  <input list="stations" name="station" id="station-input" autocomplete="off">
-  <datalist id="stations">
-    <!-- Populated dynamically -->
-  </datalist>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- Results div -->
-<div id="results"></div>
-
-
-
-
-
-  <script>
-
-
-
-
-///////// Suggestions
-
-let timer;
-const stationInput = document.getElementById('station-input');
-
-stationInput.addEventListener('input', () => {
-  // Clear the previous timeout if it exists
-  if (timer) {
-    clearTimeout(timer);
-  }
-
-  // Set a new timeout
-  timer = setTimeout(async () => {
-    // Clear out the old options
-    const dataList = document.getElementById('stations');
-    dataList.innerHTML = '';
-
-    // Create a new URL object
-    let url = new URL('/api/suggestions', window.location.origin);
-
-    // Gather user input into params object
-    let params = {
-      q: stationInput.value
-    };
-
-    // Add each parameter to the URL
-    for (let key in params) {
-      url.searchParams.append(key, params[key]);
-    }
-
-    // Make the HTTP request
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const stationNames = await response.json();
-
-    // Populate the datalist with the new options
-    for (const name of stationNames) {
-      const option = document.createElement('option');
-      option.value = name;
-      dataList.appendChild(option);
-    }
-  }, 300); // Fetch suggestions 300 ms after the user stops typing
-});
-
-///////// Suggestions
-
-
-
-
-
-document.getElementById('findTripsButton').addEventListener('click', function() {
- 
- // Create a new URL object
- let url = new URL('/api/findTrips', window.location.origin);
-
- // Gather user input into params object
- 
- let inputs = [
-    {id: 'departureStationIds', type: 'array', emptyValue: ''},
-    {id: 'returnStationIds', type: 'array', emptyValue: ''},
-    {id: 'departureTime', type: 'string', emptyValue: ''},
-    {id: 'returnTime', type: 'string', emptyValue: ''},
-    {id: 'coveredDistanceMeters', type: 'number', emptyValue: ''},
-    {id: 'durationSeconds', type: 'number', emptyValue: ''}
-  ];
-
-  let params = {};
-
-  inputs.forEach(input => {
-    let inputValue = document.getElementById(input.id).value;
-
-    if (inputValue !== input.emptyValue) {
-      if (input.type === 'array') {
-        params[input.id] = inputValue.split(',').map(Number);
-      } else if (input.type === 'number') {
-        params[input.id] = Number(inputValue);
-      } else {
-        params[input.id] = inputValue;
-      }
-    }
-  });
-
- console.log('Initial url:', url);
- console.log('Initial params:', params);
- 
-// Add each parameter to the URL
-for (let key in params) {
-  if (Array.isArray(params[key])) {
-    params[key].forEach(value => url.searchParams.append(key + '[]', value));
-  } else {
-    url.searchParams.append(key, params[key]);
-  }
-}
-
-
- console.log('Final url:', url);
-
- fetch(url, {
-   method: 'GET',
-   headers: {
-     'Content-Type': 'application/json',
-   },
- })
- .then(response => {
-   console.log('Response received:', response);
-   return response.json();
- })
- .then(data => {
-   console.log('Data received:', data);
-   if (data.errors) {
-       console.log('Error details:', data.errors);
-   } else {
-     // Get a reference to the results div
-     let resultsDiv = document.getElementById('results');
-     let foundTripsDiv = document.getElementById('foundTripsHintText');
-
-     // Clear the current contents of the results div
-     resultsDiv.innerHTML = '';
-     foundTripsDiv.innerHTML = '';
-
-     // Convert each item in the data array into a paragraph and append it to the results div
-     data[0].forEach(item => {
-       let p = document.createElement('p');
-       p.textContent = JSON.stringify(item);
-       resultsDiv.appendChild(p);
-     });
-     let foundTrips = data[1] 
-     foundTripsDiv.textContent = JSON.stringify(foundTrips);
-     
-   }
- })
- .catch((error) => {
-   console.error('Error:', error);
- });
-});
-
-
-
-
-
-
-
-
-  </script>
-
+    <input id="departureStationIds" type="text" placeholder="Departure station IDs (comma-separated)">
+    <input id="returnStationIds" type="text" placeholder="Return station IDs (comma-separated)">
+    <input id="departureTime" type="text" placeholder="Departure time (yyyy-mm-dd)">
+    <input id="returnTime" type="text" placeholder="Return time (yyyy-mm-dd)">
+    <input id="coveredDistanceMeters" type="text" placeholder="Covered distance (meters)">
+    <input id="durationSeconds" type="text" placeholder="Duration (seconds)">
+  </div>
   
+  <div class="container2">
+    <!-- Find Trips button -->
+    <p id="foundTripsHintText">Find Trips</p>
+    <button id="findTripsButton">Find Trips</button>
+  </div>
+  
+  
+  
+  <div> 
+    <input list="stations" name="station" id="station-input" autocomplete="off">
+    <datalist id="stations">
+      <!-- Populated dynamically -->
+    </datalist>
+  </div>
+  
+  
+  <!-- Results div -->
+  <div id="results"></div>
+  
+  
+  <script src="findTrips.js"></script>
+  <script src="suggestions.js"></script>
+
 </body>
 </html>

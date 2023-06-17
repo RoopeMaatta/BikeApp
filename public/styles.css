@@ -1,0 +1,16 @@
+/*  */
+/* Description: Define base visual styles and layout of web page  */
+/* Note: primary, secondary, etc with: var(--variable-name) */
+/*  */
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.container2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
