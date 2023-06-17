@@ -4,4 +4,3 @@
 
 // define the functionality of buttons
 
-// communicate with backend

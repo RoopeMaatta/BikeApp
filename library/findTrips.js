@@ -74,8 +74,8 @@ const findTrips = async (req, res, next) => {
  
    console.log(`Found ${trips.length} trips.`);
    // console.log(jsonTrips);
- 
-   res.json(preparedTrips);
+   
+   res.json([preparedTrips, trips.length]);
  };
  
  // // Usage example
