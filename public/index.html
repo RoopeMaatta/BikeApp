@@ -32,11 +32,19 @@
   
   
   <div> 
+    <!-- Due to lacking functionality and customizability datalist could be changed to:
+    mui combobox with: 
+      - asynchronous: search as you type
+      - multiple values / tags
+      - limit tags
+      - highlights
+    -->
     <input list="stations" name="station" id="station-input" autocomplete="off">
     <datalist id="stations">
       <!-- Populated dynamically -->
     </datalist>
   </div>
+  <div id="selected-stations"></div>
   
   
   <!-- Results div -->
