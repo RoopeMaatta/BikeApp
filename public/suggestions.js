@@ -3,6 +3,8 @@
  */
 
 
+
+// Populate datalist with suggestions fetch
 let timer;
 const stationInput = document.getElementById('station-input');
 const selectedStationsContainer = document.getElementById('selected-stations');
@@ -53,7 +55,7 @@ stationInput.addEventListener('input', (event) => {
       option.value = name;
       dataList.appendChild(option);
     }
-  }, 300); // Fetch suggestions 300 ms after the user stops typing
+  }, 100); // Fetch suggestions 100 ms after the user stops typing
 });
 
 stationInput.addEventListener('keydown', (event) => {
@@ -67,9 +69,14 @@ stationInput.addEventListener('keydown', (event) => {
       const tag = document.createElement('span');
       tag.textContent = currentValue;
       tag.classList.add('tag');
+    
+      // Create button for removing tag
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'x';
+      removeButton.classList.add('remove-button');
+      tag.appendChild(removeButton);
+      
       selectedStationsContainer.appendChild(tag);
-
-      // clear the input
       stationInput.value = '';
     }
   }
@@ -86,9 +93,19 @@ stationInput.addEventListener('input', () => {
     const tag = document.createElement('span');
     tag.textContent = currentValue;
     tag.classList.add('tag');
-    selectedStationsContainer.appendChild(tag);
 
-    // clear the input
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'x';
+    removeButton.classList.add('remove-button');
+    tag.appendChild(removeButton);
+
+    selectedStationsContainer.appendChild(tag);
     stationInput.value = '';
+  }
+});
+
+selectedStationsContainer.addEventListener('click', (event) => {
+  if (event.target.matches('.remove-button')) {
+    event.target.parentNode.remove();
   }
 });
