@@ -4,9 +4,11 @@
 
 const { findTrips } = require('./findTrips');
 const { findTripsValidation, validate } = require('./validation');
+const { getSuggestions } = require("./suggestions")
 
 module.exports = {
     findTrips,
     findTripsValidation,
-    validate
+    validate,
+    getSuggestions,
   };

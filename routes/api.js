@@ -4,7 +4,12 @@
 
 const express = require('express');
 const router = express.Router();
-const { findTrips, findTripsValidation, validate } = require('../library');
+const { findTrips,
+        findTripsValidation,
+        validate,
+        getSuggestions,
+       } = require('../library');
+
 
 // Handler function to wrap each route
 function asyncHandler(cb){
@@ -18,7 +23,8 @@ function asyncHandler(cb){
     }
   }
 
-
   router.get('/findTrips', findTripsValidation, validate, asyncHandler(findTrips));
+
+  router.get("/suggestions", asyncHandler(getSuggestions))
 
 module.exports = router;
