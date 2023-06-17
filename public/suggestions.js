@@ -3,6 +3,18 @@
  */
 
 
+function getSelectedStations() {
+  const tags = document.querySelectorAll('#selected-stations .tag');
+  const selectedStations = Array.from(tags).map(tag => tag.childNodes[0].textContent);  // get textContent of the first child node (station name)
+  return selectedStations;
+}
+
+// Usage
+//console.log(getSelectedStations());  // Will output an array of selected station names
+
+
+
+
 
 // Populate datalist with suggestions fetch
 let timer;
@@ -57,7 +69,6 @@ stationInput.addEventListener('input', (event) => {
     }
   }, 100); // Fetch suggestions 100 ms after the user stops typing
 });
-
 stationInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     event.preventDefault();
@@ -65,22 +76,32 @@ stationInput.addEventListener('keydown', (event) => {
     // add the current value to the selected stations, if it's in the list of last suggestions
     const currentValue = stationInput.value.trim();
 
-    if (currentValue !== '' && lastSuggestions.includes(currentValue)) {  // UPDATED: check if currentValue is in lastSuggestions
+    if (currentValue !== '' && lastSuggestions.includes(currentValue)) {  
+      // Create a new tag (span) element
       const tag = document.createElement('span');
-      tag.textContent = currentValue;
       tag.classList.add('tag');
-    
-      // Create button for removing tag
+
+      // NEW: Create a new text node for the tag name
+      const tagName = document.createTextNode(currentValue);
+      // NEW: Append the text node to the tag element
+      tag.appendChild(tagName);
+
+      // NEW: Create a new button element for removing the tag
       const removeButton = document.createElement('button');
       removeButton.textContent = 'x';
       removeButton.classList.add('remove-button');
+      // NEW: Append the remove button to the tag element
       tag.appendChild(removeButton);
-      
+
+      // Append the complete tag element (including the remove button) to the selected stations container
       selectedStationsContainer.appendChild(tag);
+
+      // clear the input
       stationInput.value = '';
     }
   }
 });
+
 
 
 // If input field matches suggestion field add to tag
