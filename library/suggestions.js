@@ -6,18 +6,20 @@
 
 // Import database object
 const db = require('../db');
+const { Op } = require('sequelize'); // Import the Sequelize Operators.
 
 const getSuggestions = async (req, res, next) => {
-  // Query the database for station names
-  const stations = await db.models.Bikestation.findAll({
-    attributes: ['Nimi'] // Only fetch the 'Nimi' column
-  });
-
-  // Prepare the stations data by getting only the dataValues from the query
-  const preparedStations = stations.map(station => station.dataValues.Nimi);
-
-  // Respond with the prepared data
-  res.json(preparedStations);
-};
+    const searchString = req.query.q.replace(/[%_]/g, ''); // Remove wildcard characters from user input
+  
+    const stations = await db.models.Bikestation.findAll({
+      attributes: ['Nimi'],
+      where: db.sequelize.where(db.sequelize.fn('lower', db.sequelize.col('Nimi')), 'LIKE', '%' + searchString.toLowerCase() + '%')
+    });
+  
+    const preparedStations = stations.map(station => station.dataValues.Nimi);
+  
+    res.json(preparedStations);
+  };
+  
 
 module.exports = { getSuggestions };
