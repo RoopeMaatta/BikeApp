@@ -12,11 +12,14 @@ const getSuggestions = async (req, res, next) => {
     const searchString = req.query.q.replace(/[%_]/g, ''); // Remove wildcard characters from user input
   
     const stations = await db.models.Bikestation.findAll({
-      attributes: ['Nimi'],
+      attributes: ['Nimi', 'ID'],
       where: db.sequelize.where(db.sequelize.fn('lower', db.sequelize.col('Nimi')), 'LIKE', '%' + searchString.toLowerCase() + '%')
     });
   
-    const preparedStations = stations.map(station => station.dataValues.Nimi);
+    const preparedStations = stations.map(station => ({
+      id: station.dataValues.ID,
+      name: station.dataValues.Nimi
+  }));
   
     res.json(preparedStations);
   };

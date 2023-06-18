@@ -5,9 +5,13 @@
 
 function getSelectedStations() {
   const tags = document.querySelectorAll('#selected-stations .tag');
-  const selectedStations = Array.from(tags).map(tag => tag.childNodes[0].textContent);  // get textContent of the first child node (station name)
+  const selectedStations = Array.from(tags).map(tag => ({
+    name: tag.childNodes[0].textContent,  // get textContent of the first child node (station name)
+    id: tag.dataset.id  // get the data-id attribute of the tag (station ID)
+  }));
   return selectedStations;
 }
+
 
 // Usage
 //console.log(getSelectedStations());  // Will output an array of selected station names
@@ -62,46 +66,14 @@ stationInput.addEventListener('input', (event) => {
     lastSuggestions = stationNames;
 
     // Populate the datalist with the new options
-    for (const name of stationNames) {
+    for (const station of stationNames) {
       const option = document.createElement('option');
-      option.value = name;
+      option.value = station.name;  // Set the visible value to the station's name
+      option.dataset.id = station.id;  // Store the station's ID in a data attribute
       dataList.appendChild(option);
     }
-  }, 100); // Fetch suggestions 100 ms after the user stops typing
+  }, 0); // Fetch suggestions x ms after the user stops typing
 });
-stationInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-
-    // add the current value to the selected stations, if it's in the list of last suggestions
-    const currentValue = stationInput.value.trim();
-
-    if (currentValue !== '' && lastSuggestions.includes(currentValue)) {  
-      // Create a new tag (span) element
-      const tag = document.createElement('span');
-      tag.classList.add('tag');
-
-      // NEW: Create a new text node for the tag name
-      const tagName = document.createTextNode(currentValue);
-      // NEW: Append the text node to the tag element
-      tag.appendChild(tagName);
-
-      // NEW: Create a new button element for removing the tag
-      const removeButton = document.createElement('button');
-      removeButton.textContent = 'x';
-      removeButton.classList.add('remove-button');
-      // NEW: Append the remove button to the tag element
-      tag.appendChild(removeButton);
-
-      // Append the complete tag element (including the remove button) to the selected stations container
-      selectedStationsContainer.appendChild(tag);
-
-      // clear the input
-      stationInput.value = '';
-    }
-  }
-});
-
 
 
 // If input field matches suggestion field add to tag
@@ -110,10 +82,13 @@ stationInput.addEventListener('keydown', (event) => {
 stationInput.addEventListener('input', () => {
   const currentValue = stationInput.value.trim();
   // add the current value to the selected stations, if it's in the list of last suggestions
-  if (currentValue !== '' && lastSuggestions.includes(currentValue)) {
+  if (currentValue !== '' && lastSuggestions.some(station => station.name === currentValue)) {
+    const matchingStation = lastSuggestions.find(station => station.name === currentValue);  // Find the matching station
+
     const tag = document.createElement('span');
     tag.textContent = currentValue;
     tag.classList.add('tag');
+    tag.dataset.id = matchingStation.id;  // Store the station's ID in a data attribute
 
     const removeButton = document.createElement('button');
     removeButton.textContent = 'x';
