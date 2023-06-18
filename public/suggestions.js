@@ -6,6 +6,15 @@
  * @param {string} selectedContainerId - The ID of the element where selected items from the autocomplete will be added.
  *
  * @returns {void}
+ * 
+ * Due to lacking functionality and customizability datalist and suggestions.js could be changed to:
+    mui combobox with: 
+      - asynchronous: search as you type
+      - multiple values / tags
+      - limit tags
+      - highlights
+      This would lead to changing the frontend into a react app
+ * 
  */
 
 

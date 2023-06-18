@@ -9,6 +9,12 @@
     gap: 10px;
 }
 
+.container div {
+    display: grid;
+    gap: 10px;
+}
+
+
 .container2 {
     display: grid;
     grid-template-columns: 1fr 1fr;

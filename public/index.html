@@ -15,8 +15,18 @@
   
   <!-- Input fields for parameters -->
   <div class="container">
-    <input id="departureStationIds" type="text" placeholder="Departure station IDs (comma-separated)">
-    <input id="returnStationIds" type="text" placeholder="Return station IDs (comma-separated)">
+    <div>
+      <input id="departureStationIds" list="departure-stations" type="text" placeholder="Departure station IDs (comma-separated)">
+      <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
+      <div id="selected-departure-stations"> <!-- Selected stations will appear here as tags --> </div>
+    </div>
+    
+    <div>
+      <input id="returnStationIds" list="return-stations"  type="text" placeholder="Return station IDs (comma-separated)">
+      <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
+      <div id="selected-return-stations"> <!-- Selected stations will appear here as tags --> </div>
+    </div>
+    
     <input id="departureTime" type="text" placeholder="Departure time (yyyy-mm-dd)">
     <input id="returnTime" type="text" placeholder="Return time (yyyy-mm-dd)">
     <input id="coveredDistanceMeters" type="text" placeholder="Covered distance (meters)">
@@ -32,13 +42,6 @@
   
   
   <div> 
-    <!-- Due to lacking functionality and customizability datalist could be changed to:
-    mui combobox with: 
-      - asynchronous: search as you type
-      - multiple values / tags
-      - limit tags
-      - highlights
-    -->
     <input list="stations" name="station" id="station-input" autocomplete="off">
     <datalist id="stations"> <!-- Populated dynamically --> </datalist>
   </div>
@@ -51,10 +54,14 @@
   
   <script src="findTrips.js"></script>
   <script src="suggestions.js"></script>
-
+  
   <script>
     createSuggestions('station-input', '/api/suggestions', 'selected-stations');
+    createSuggestions('departureStationIds', '/api/suggestions', 'selected-departure-stations');
+    createSuggestions('returnStationIds', '/api/suggestions', 'selected-return-stations');
+    
+    
   </script>
-
+  
 </body>
 </html>
