@@ -14,8 +14,8 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
   // Gather user input into params object
   
   let inputs = [
-     {id: 'departureStationIds', type: 'array', emptyValue: ''},
-     {id: 'returnStationIds', type: 'array', emptyValue: ''},
+     {id: 'departureStationIds', type: 'array', emptyValue: '', isTagContainer: true},
+     {id: 'returnStationIds', type: 'array', emptyValue: '', isTagContainer: true},
      {id: 'departureTime', type: 'string', emptyValue: ''},
      {id: 'returnTime', type: 'string', emptyValue: ''},
      {id: 'coveredDistanceMeters', type: 'number', emptyValue: ''},
@@ -24,19 +24,24 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
  
    let params = {};
  
-   inputs.forEach(input => {
-     let inputValue = document.getElementById(input.id).value;
- 
-     if (inputValue !== input.emptyValue) {
-       if (input.type === 'array') {
-         params[input.id] = inputValue.split(',').map(Number);
-       } else if (input.type === 'number') {
-         params[input.id] = Number(inputValue);
-       } else {
-         params[input.id] = inputValue;
-       }
-     }
-   });
+  inputs.forEach(input => {
+    if (input.isTagContainer) {
+      let tagContainer = document.getElementById(input.id);
+      let tagElements = Array.from(tagContainer.getElementsByClassName('tag'));
+      let idValues = tagElements.map(tag => Number(tag.dataset.id));
+      params[input.id.replace('selected-', '')] = idValues;
+    } else {
+      let inputValue = document.getElementById(input.id).value;
+      if (inputValue !== input.emptyValue) {
+        if (input.type === 'number') {
+          params[input.id] = Number(inputValue);
+        } else {
+          params[input.id] = inputValue;
+        }
+      }
+    }
+  });
+  
  
   console.log('Initial url:', url);
   console.log('Initial params:', params);

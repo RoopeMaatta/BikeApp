@@ -16,15 +16,15 @@
   <!-- Input fields for parameters -->
   <div class="container">
     <div>
-      <input id="departureStationIds" list="departure-stations" type="text" placeholder="Departure station IDs (comma-separated)">
+      <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure station IDs (comma-separated)">
       <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
-      <div id="selected-departure-stations"> <!-- Selected stations will appear here as tags --> </div>
+      <div id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
     </div>
     
     <div>
-      <input id="returnStationIds" list="return-stations"  type="text" placeholder="Return station IDs (comma-separated)">
+      <input id="returnStationInput" list="return-stations"  type="text" placeholder="Return station IDs (comma-separated)">
       <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
-      <div id="selected-return-stations"> <!-- Selected stations will appear here as tags --> </div>
+      <div id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
     </div>
     
     <input id="departureTime" type="text" placeholder="Departure time (yyyy-mm-dd)">
@@ -41,13 +41,6 @@
   
   
   
-  <div> 
-    <input list="stations" name="station" id="station-input" autocomplete="off">
-    <datalist id="stations"> <!-- Populated dynamically --> </datalist>
-  </div>
-  <div id="selected-stations"></div>
-  
-  
   <!-- Results div -->
   <div id="results"></div>
   
@@ -56,9 +49,9 @@
   <script src="suggestions.js"></script>
   
   <script>
-    createSuggestions('station-input', '/api/suggestions', 'selected-stations');
-    createSuggestions('departureStationIds', '/api/suggestions', 'selected-departure-stations');
-    createSuggestions('returnStationIds', '/api/suggestions', 'selected-return-stations');
+    
+    createSuggestions('departureStationInput', '/api/suggestions', 'departureStationIds');
+    createSuggestions('returnStationInput', '/api/suggestions', 'returnStationIds');
     
     
   </script>
