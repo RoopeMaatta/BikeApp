@@ -40,9 +40,7 @@
       - highlights
     -->
     <input list="stations" name="station" id="station-input" autocomplete="off">
-    <datalist id="stations">
-      <!-- Populated dynamically -->
-    </datalist>
+    <datalist id="stations"> <!-- Populated dynamically --> </datalist>
   </div>
   <div id="selected-stations"></div>
   
@@ -53,6 +51,10 @@
   
   <script src="findTrips.js"></script>
   <script src="suggestions.js"></script>
+
+  <script>
+    createSuggestions('station-input', '/api/suggestions', 'selected-stations');
+  </script>
 
 </body>
 </html>
