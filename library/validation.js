@@ -21,44 +21,69 @@ exports.findTripsValidation = checkSchema({
     // Valid station names will be handled in the frontend input field with suggestions
     errorMessage: 'returnStationIds should be an array',
   },
-  departureTime: {
-    in: ['query'],
-    optional: true,
-    isDate: true,
-      // Valid date range fill be handled in the frontend input field
-    errorMessage: 'departureTime should be a valid date',
-  },
-  returnTime: {
+  departureDate: {
     in: ['query'],
     optional: true,
     isDate: true,
     // Valid date range fill be handled in the frontend input field
-    errorMessage: 'returnTime should be a valid date',
+    errorMessage: 'departureDate should be a valid date',
   },
-  coveredDistanceMeters: {
+  returnDate: {
     in: ['query'],
     optional: true,
-    custom: {
-      options: (value, { req }) => {
-        if (value < 0) {
-          throw new Error('coveredDistanceMeters should be a positive integer');
-        }
-        return true;
-      }
-    }
+    isDate: true,
+    // Valid date range fill be handled in the frontend input field
+    errorMessage: 'returnDate should be a valid date',
   },
-  durationSeconds: {
+  departureTime: {
     in: ['query'],
     optional: true,
-    custom: {
-      options: (value, { req }) => {
-        if (value < 0) {
-          throw new Error('durationSeconds should be a positive integer');
-        }
-        return true;
-      }
+    matches: {
+      options: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
+      errorMessage: 'departureTime should be a valid time in the format HH:MM',
     }
-   },
+  },
+  returnTime: {
+    in: ['query'],
+    optional: true,
+    matches: {
+      options: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
+      errorMessage: 'returnTime should be a valid time in the format HH:MM',
+    }
+  },
+  coveredDistanceMetersMin: {
+    in: ['query'],
+    optional: true,
+    isInt: {
+      options: { min: 0 },
+      errorMessage: 'coveredDistanceMetersMin should be a positive integer or zero',
+    },
+  },
+  coveredDistanceMetersMax: {
+    in: ['query'],
+    optional: true,
+    isInt: {
+      options: { min: 0 },
+      errorMessage: 'coveredDistanceMetersMax should be a positive integer or zero',
+    },
+  },
+  durationSecondsMin: {
+    in: ['query'],
+    optional: true,
+    isInt: {
+      options: { min: 0 },
+      errorMessage: 'durationSecondsMin should be a positive integer or zero',
+    },
+  },
+  durationSecondsMax: {
+    in: ['query'],
+    optional: true,
+    isInt: {
+      options: { min: 0 },
+      errorMessage: 'durationSecondsMax should be a positive integer or zero',
+    },
+  },
+  
 });
 
 // Wrap Validation into middleware function for easier use.

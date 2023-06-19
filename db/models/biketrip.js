@@ -22,37 +22,31 @@ module.exports = (sequelize, DataTypes) => {
         // Exclude the id column due optimization assumption - Primary key set to departure+return time&id
         
         departureTime: {
-          type: DataTypes.DATE, // Store as big integer
+          type: DataTypes.BIGINT,
           allowNull: false,
           primaryKey: true,
-          // get() { // Convert Unix timestamp to Date when retrieving data
-          //     const unixTimestamp = this.getDataValue('departureTime');
-          //     return new Date(unixTimestamp * 1000);
-          // },
-          // set(value) { // Convert Date to Unix timestamp when storing data
-          //     if (!(value instanceof Date)) {
-          //         value = new Date(value + 'Z'); // Append 'Z' to indicate UTC
-          //     }
-          //     this.setDataValue('departureTime', Math.floor(value.getTime() / 1000));
-          // },
-        },
-      
-
-          returnTime: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            primaryKey: true,
-            // get() { // Convert Unix timestamp to Date when retrieving data
-            //   const unixTimestamp = this.getDataValue('returnTime');
-            //   return new Date(unixTimestamp * 1000);
-            // },
-            // set(value) { // Convert Date to Unix timestamp when storing data
-            //   if (!(value instanceof Date)) {
-            //       value = new Date(value + 'Z'); // Append 'Z' to indicate UTC
-            //   }
-            //   this.setDataValue('returnTime', Math.floor(value.getTime() / 1000));
-            // },
+          get() {
+              const unixTimestamp = this.getDataValue('departureTime');
+              return new Date(unixTimestamp * 1000);
           },
+          set(value) {
+              this.setDataValue('departureTime', Math.floor(new Date(value).getTime() / 1000));
+          }
+      },
+      
+      
+      returnTime: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true,
+        get() {
+            const unixTimestamp = this.getDataValue('returnTime');
+            return new Date(unixTimestamp * 1000);
+        },
+        set(value) {
+            this.setDataValue('returnTime', Math.floor(new Date(value).getTime() / 1000));
+        }
+    },
 
           departureStationId: {
             type: DataTypes.INTEGER,

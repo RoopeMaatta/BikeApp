@@ -16,8 +16,10 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
   let inputs = [
      {id: 'departureStationIds', type: 'array', emptyValue: '', isTagContainer: true},
      {id: 'returnStationIds', type: 'array', emptyValue: '', isTagContainer: true},
-     {id: 'departureTime', type: 'string', emptyValue: ''},
-     {id: 'returnTime', type: 'string', emptyValue: ''},
+     {id: 'departureDate', type: 'string', emptyValue: ''},
+     {id: 'departureTime', emptyValue: '', type: 'time' },
+     {id: 'returnDate', type: 'string', emptyValue: ''},
+     {id: 'returnTime', emptyValue: '', type: 'time' },
      {id: 'coveredDistanceMetersMin', type: 'number', emptyValue: ''},
      {id: 'coveredDistanceMetersMax', type: 'number', emptyValue: ''},
      {id: 'durationSecondsMin', type: 'number', emptyValue: ''},
@@ -26,6 +28,24 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
  
    let params = {};
  
+  // inputs.forEach(input => {
+  //   if (input.isTagContainer) {
+  //     let tagContainer = document.getElementById(input.id);
+  //     let tagElements = Array.from(tagContainer.getElementsByClassName('tag'));
+  //     let idValues = tagElements.map(tag => Number(tag.dataset.id));
+  //     params[input.id.replace('selected-', '')] = idValues;
+  //   } else {
+  //     let inputValue = document.getElementById(input.id).value;
+  //     if (inputValue !== input.emptyValue) {
+  //       if (input.type === 'number') {
+  //         params[input.id] = Number(inputValue);
+  //       } else {
+  //         params[input.id] = inputValue;
+  //       }
+  //     }
+  //   }
+  // });
+
   inputs.forEach(input => {
     if (input.isTagContainer) {
       let tagContainer = document.getElementById(input.id);
@@ -35,7 +55,11 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
     } else {
       let inputValue = document.getElementById(input.id).value;
       if (inputValue !== input.emptyValue) {
-        if (input.type === 'number') {
+        if (input.id.includes('Date')) {
+          params[input.id] = inputValue;
+        } else if (input.id.includes('Time')) {
+          params[input.id] = inputValue;
+        } else if (input.type === 'number') {
           params[input.id] = Number(inputValue);
         } else {
           params[input.id] = inputValue;
@@ -43,6 +67,10 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
       }
     }
   });
+
+  console.log(params);  // Add this line to log the params object to the console
+  
+  
   
  
   console.log('Initial url:', url);
