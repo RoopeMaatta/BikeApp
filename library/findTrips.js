@@ -56,21 +56,33 @@ const findTrips = async (req, res, next) => {
      include: [{
        model: db.models.Bikestation,
        as: 'DepartureStation', // as = alias for assosiation
-       attributes: [] // do not include extra attributes from model
+       attributes: ["Nimi"] // include station name in the response and no extra attributes from models
      },
      {
        model: db.models.Bikestation,
        as: 'ReturnStation',
-       attributes: []
+       attributes: ["Nimi"]
      }]
    });
  
+   
    // Prepare the trips data by getting only the dataValues from the query, and not wrapped in a instance of a Sequelize model
    // trips(array of model instances) -> preparedTrips(array of dataValue)
-   const preparedTrips = trips.map(trip => trip.dataValues);
- 
-   // Convert the trips data to a JSON string
-   //const jsonTrips = JSON.stringify(preparedTrips);
+   const preparedTrips = trips.map(trip => {
+    // First get the data values of the trip
+    const tripData = trip.dataValues;
+  
+    // Then add the station names
+    tripData.departureStationName = trip.DepartureStation.Nimi;
+    tripData.returnStationName = trip.ReturnStation.Nimi;
+  
+    // Remove the original DepartureStation and ReturnStation from tripData
+    delete tripData.DepartureStation;
+    delete tripData.ReturnStation;
+  
+    return tripData;
+  });
+  
  
    console.log(`Found ${trips.length} trips.`);
    // console.log(jsonTrips);
@@ -78,12 +90,6 @@ const findTrips = async (req, res, next) => {
    res.json([preparedTrips, trips.length]);
  };
  
- // // Usage example
- // findTrips({
- //   departureStationIds: [116,147],
- //   returnStationIds: [17, 232],
- //   //departureTime: '2021-04-31',
- //   //returnTime: '2021-07-01',
- // });
+
  
  module.exports = { findTrips };
