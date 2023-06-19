@@ -18,8 +18,10 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
      {id: 'returnStationIds', type: 'array', emptyValue: '', isTagContainer: true},
      {id: 'departureTime', type: 'string', emptyValue: ''},
      {id: 'returnTime', type: 'string', emptyValue: ''},
-     {id: 'coveredDistanceMeters', type: 'number', emptyValue: ''},
-     {id: 'durationSeconds', type: 'number', emptyValue: ''}
+     {id: 'coveredDistanceMetersMin', type: 'number', emptyValue: ''},
+     {id: 'coveredDistanceMetersMax', type: 'number', emptyValue: ''},
+     {id: 'durationSecondsMin', type: 'number', emptyValue: ''},
+     {id: 'durationSecondsMax', type: 'number', emptyValue: ''}
    ];
  
    let params = {};

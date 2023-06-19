@@ -24,8 +24,10 @@ const findTrips = async (req, res, next) => {
      returnStationIds,
      departureTime,
      returnTime,
-     coveredDistanceMeters,
-     durationSeconds
+     coveredDistanceMetersMin,
+     coveredDistanceMetersMax,
+     durationSecondsMin,
+     durationSecondsMax
    } = req.query;
  
    // Construct the where clause. {} to be filled with key-value pairs
@@ -34,21 +36,18 @@ const findTrips = async (req, res, next) => {
    if (returnStationIds) where.returnStationId = { [Op.in]: returnStationIds };
    if (departureTime) where.departureTime = { [Op.gte]: new Date(departureTime) }; // gte = greater than or equal to
    if (returnTime) where.returnTime = { [Op.lte]: new Date(returnTime) }; // lto = less than or equal to
-   let distance = Number(coveredDistanceMeters); // make shure is number
-   if (coveredDistanceMeters) {
-    where.coveredDistanceMeters = {
-      [Op.gte]: distance - 100, // query searches for trips within +/- 100m range
-      [Op.lte]: distance + 100, 
-    };
+   
+   if (coveredDistanceMetersMin || coveredDistanceMetersMax) {
+    where.coveredDistanceMeters = {}; 
+    if (coveredDistanceMetersMin) where.coveredDistanceMeters[Op.gte] = Number(coveredDistanceMetersMin);
+    if (coveredDistanceMetersMax) where.coveredDistanceMeters[Op.lte] = Number(coveredDistanceMetersMax);
   }
-  let duration = Number(durationSeconds); // make shure is number
-  if (durationSeconds) {
-    where.durationSeconds = {
-      [Op.gte]: duration - 30, // query searches for trips within +/- 30s range
-      [Op.lte]: duration + 30, 
-    };
+  if (durationSecondsMin || durationSecondsMax) {
+    where.durationSeconds = {};
+    if (durationSecondsMin) where.durationSeconds[Op.gte] = Number(durationSecondsMin);
+    if (durationSecondsMax) where.durationSeconds[Op.lte] = Number(durationSecondsMax);
   }
-
+  
    // Query the database with where object as conditions
    const trips = await db.models.Biketrip.findAll({
      where,
@@ -65,7 +64,7 @@ const findTrips = async (req, res, next) => {
      }]
    });
  
-   
+
    // Prepare the trips data by getting only the dataValues from the query, and not wrapped in a instance of a Sequelize model
    // trips(array of model instances) -> preparedTrips(array of dataValue)
    const preparedTrips = trips.map(trip => {
