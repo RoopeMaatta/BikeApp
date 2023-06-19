@@ -1,7 +1,3 @@
-<!--  -->
-<!-- Description: Primary structure and contents of webpage    -->
-<!--  -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,27 +8,35 @@
 </head>
 <body>
   
-  
   <!-- Input fields for parameters -->
   <div class="container">
+    <!-- Departure station ID input -->
     <div>
       <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure station IDs (comma-separated)">
       <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
       <div id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
     </div>
     
+    <!-- Return station ID input -->
     <div>
-      <input id="returnStationInput" list="return-stations"  type="text" placeholder="Return station IDs (comma-separated)">
+      <input id="returnStationInput" list="return-stations" type="text" placeholder="Return station IDs (comma-separated)">
       <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
       <div id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
     </div>
     
-    
+    <!-- Date and time inputs -->
     <input id="departureDate" type="date" >
     <input id="returnDate" type="date" >
-    <input id="departureTime" type="time" >
-    <input id="returnTime" type="time" >
-    
+    <div class="container">
+      <input id="departureTimeMin" type="time" placeholder="Minimum departure time">
+      <input id="departureTimeMax" type="time" placeholder="Maximum departure time">
+    </div>
+    <div class="container">
+      <input id="returnTimeMin" type="time" placeholder="Minimum return time">
+      <input id="returnTimeMax" type="time" placeholder="Maximum return time">
+    </div>
+
+    <!-- Additional parameters inputs -->
     <input id="coveredDistanceMetersMin" type="text" placeholder="Minimum covered distance (meters)">
     <input id="coveredDistanceMetersMax" type="text" placeholder="Maximum covered distance (meters)">
     <input id="durationSecondsMin" type="text" placeholder="Minimum duration (seconds)">
@@ -40,27 +44,23 @@
     
   </div>
   
+  <!-- Find Trips button -->
   <div class="container2">
-    <!-- Find Trips button -->
     <p id="foundTripsHintText">Find Trips</p>
     <button id="findTripsButton">Find Trips</button>
   </div>
   
-  
-  
   <!-- Results div -->
   <div id="results"></div>
   
-  
+  <!-- JavaScript files -->
   <script src="findTrips.js"></script>
   <script src="suggestions.js"></script>
   
+  <!-- Create suggestions script -->
   <script>
-    
     createSuggestions('departureStationInput', '/api/suggestions', 'departureStationIds');
     createSuggestions('returnStationInput', '/api/suggestions', 'returnStationIds');
-    
-    
   </script>
   
 </body>

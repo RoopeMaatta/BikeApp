@@ -17,9 +17,11 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
      {id: 'departureStationIds', type: 'array', emptyValue: '', isTagContainer: true},
      {id: 'returnStationIds', type: 'array', emptyValue: '', isTagContainer: true},
      {id: 'departureDate', type: 'string', emptyValue: ''},
-     {id: 'departureTime', emptyValue: '', type: 'time' },
+     {id: 'departureTimeMin', emptyValue: '', type: 'time' },
+     {id: 'departureTimeMax', emptyValue: '', type: 'time' },
      {id: 'returnDate', type: 'string', emptyValue: ''},
-     {id: 'returnTime', emptyValue: '', type: 'time' },
+     {id: 'returnTimeMin', emptyValue: '', type: 'time' },
+     {id: 'returnTimeMax', emptyValue: '', type: 'time' },
      {id: 'coveredDistanceMetersMin', type: 'number', emptyValue: ''},
      {id: 'coveredDistanceMetersMax', type: 'number', emptyValue: ''},
      {id: 'durationSecondsMin', type: 'number', emptyValue: ''},
@@ -27,24 +29,6 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
    ];
  
    let params = {};
- 
-  // inputs.forEach(input => {
-  //   if (input.isTagContainer) {
-  //     let tagContainer = document.getElementById(input.id);
-  //     let tagElements = Array.from(tagContainer.getElementsByClassName('tag'));
-  //     let idValues = tagElements.map(tag => Number(tag.dataset.id));
-  //     params[input.id.replace('selected-', '')] = idValues;
-  //   } else {
-  //     let inputValue = document.getElementById(input.id).value;
-  //     if (inputValue !== input.emptyValue) {
-  //       if (input.type === 'number') {
-  //         params[input.id] = Number(inputValue);
-  //       } else {
-  //         params[input.id] = inputValue;
-  //       }
-  //     }
-  //   }
-  // });
 
   inputs.forEach(input => {
     if (input.isTagContainer) {
@@ -68,7 +52,7 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
     }
   });
 
-  console.log(params);  // Add this line to log the params object to the console
+  
   
   
   

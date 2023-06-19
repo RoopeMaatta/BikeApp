@@ -23,9 +23,11 @@ const findTrips = async (req, res, next) => {
     departureStationIds,
     returnStationIds,
     departureDate,
-    departureTime,
+    departureTimeMin,
+    departureTimeMax,
     returnDate,
-    returnTime,
+    returnTimeMin,
+    returnTimeMax,
     coveredDistanceMetersMin,
     coveredDistanceMetersMax,
     durationSecondsMin,
@@ -51,35 +53,60 @@ const findTrips = async (req, res, next) => {
     where.returnTime = { [Op.lte]: returnDateTime };
   }
   
-  if (departureTime) {
-    let [hours, minutes] = departureTime.split(':');
-    let totalMinutes = Number(hours) * 60 + Number(minutes);
-    where[Op.and] = [
-      ...where[Op.and] || [],
-      db.sequelize.where(
-        db.sequelize.literal(
-          `((((departureTime / 3600) % 24) * 60) + ((departureTime / 60) % 60))`
-        ),
-        '>=',
-        totalMinutes
-      ),
-    ];
-}
 
-if (returnTime) {
-    let [hours, minutes] = returnTime.split(':');
-    let totalMinutes = Number(hours) * 60 + Number(minutes);
+  function getTimeInMinutes(time) {
+    let [hours, minutes] = time.split(':');
+    return Number(hours) * 60 + Number(minutes);
+  }
+  
+  const createTimeConstraint = (timeMin, timeMax, fieldName) => {
+    let timeMinMinutes = timeMin && getTimeInMinutes(timeMin);
+    let timeMaxMinutes = timeMax && getTimeInMinutes(timeMax);
+  
+    let timeFilter = [];
+    if (timeMinMinutes !== undefined) {
+      timeFilter.push(
+        db.sequelize.where(
+          db.sequelize.literal(
+            `((((${fieldName} / 3600) % 24) * 60) + ((${fieldName} / 60) % 60))`
+          ),
+          '>=',
+          timeMinMinutes
+        )
+      );
+    }
+    if (timeMaxMinutes !== undefined) {
+      timeFilter.push(
+        db.sequelize.where(
+          db.sequelize.literal(
+            `((((${fieldName} / 3600) % 24) * 60) + ((${fieldName} / 60) % 60))`
+          ),
+          '<=',
+          timeMaxMinutes
+        )
+      );
+    }
+  
+    return timeFilter;
+  };
+  
+  // Then you can use this helper function for departureTime and returnTime like so:
+  if (departureTimeMin || departureTimeMax) {
     where[Op.and] = [
       ...where[Op.and] || [],
-      db.sequelize.where(
-        db.sequelize.literal(
-          `((((returnTime / 3600) % 24) * 60) + ((returnTime / 60) % 60))`
-        ),
-        '<=',
-        totalMinutes
-      ),
+      ...createTimeConstraint(departureTimeMin, departureTimeMax, 'departureTime')
     ];
-}
+  }
+  
+  if (returnTimeMin || returnTimeMax) {
+    where[Op.and] = [
+      ...where[Op.and] || [],
+      ...createTimeConstraint(returnTimeMin, returnTimeMax, 'returnTime')
+    ];
+  }
+  
+
+
 
   
   
