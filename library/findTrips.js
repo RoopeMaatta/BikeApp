@@ -17,6 +17,10 @@ const db = require('../db');
 // Import Op (Operators) object from sequelize package. gte(≥) and lte(≤) are used
 const { Sequelize, Op } = require('sequelize');
 
+//import pagination helperfunctions
+const { paginate, getPaginationMetadata } = require('../library/paginate');
+
+
 const findTrips = async (req, res, next) => {
   // Destructuring assignment to get each value in query to it's own const
   const {
@@ -35,9 +39,6 @@ const findTrips = async (req, res, next) => {
   } = req.query;
   
   
-  
-  
-  
   // Construct the where clause. {} to be filled with key-value pairs
   let where = {};
   if (departureStationIds) where.departureStationId = { [Op.in]: departureStationIds }; // Op.in any value within array of values
@@ -53,7 +54,6 @@ const findTrips = async (req, res, next) => {
     where.returnTime = { [Op.lte]: returnDateTime };
   }
   
-
   function getTimeInMinutes(time) {
     let [hours, minutes] = time.split(':');
     return Number(hours) * 60 + Number(minutes);
@@ -90,7 +90,6 @@ const findTrips = async (req, res, next) => {
     return timeFilter;
   };
   
-  // Then you can use this helper function for departureTime and returnTime like so:
   if (departureTimeMin || departureTimeMax) {
     where[Op.and] = [
       ...where[Op.and] || [],
@@ -105,11 +104,6 @@ const findTrips = async (req, res, next) => {
     ];
   }
   
-
-
-
-  
-  
   if (coveredDistanceMetersMin || coveredDistanceMetersMax) {
     where.coveredDistanceMeters = {}; 
     if (coveredDistanceMetersMin) where.coveredDistanceMeters[Op.gte] = Number(coveredDistanceMetersMin);
@@ -122,10 +116,19 @@ const findTrips = async (req, res, next) => {
   }
   
   
-  console.log(where)
+
+  // Extract page size and page number from query parameters
+  const { pageSize, pageNumber } = req.query;
+  // Get pagination configuration
+  const pagination = paginate(pageSize, pageNumber);
+  // Get pagination metadata
+  const paginationMetadata = await getPaginationMetadata(db.models.Biketrip, where, pageSize, pageNumber);
+
+
   // Query the database with where object as conditions
   const trips = await db.models.Biketrip.findAll({
     where,
+    ...pagination,
     attributes: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds'],
     include: [{
       model: db.models.Bikestation,
@@ -138,7 +141,6 @@ const findTrips = async (req, res, next) => {
       attributes: ["Nimi"]
     }]
   });
-  
   
 
 
@@ -180,7 +182,16 @@ const findTrips = async (req, res, next) => {
   console.log(`Found ${trips.length} trips.`);
   // console.log(jsonTrips);
   
-  res.json([preparedTrips, trips.length]);
+  res.json({
+    data: [preparedTrips],
+    pagination: {
+      totalRecords: paginationMetadata.totalRecords,
+      totalPages: paginationMetadata.totalPages,
+      currentPage: pageNumber,
+      pageSize
+    }
+  });
+  
 };
 
 

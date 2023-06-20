@@ -7,7 +7,8 @@
 
 
 document.getElementById('findTripsButton').addEventListener('click', function() {
- 
+  document.getElementById('pageNumber').value = 1;
+
   // Create a new URL object
   let url = new URL('/api/findTrips', window.location.origin);
  
@@ -25,7 +26,9 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
      {id: 'coveredDistanceMetersMin', type: 'number', emptyValue: ''},
      {id: 'coveredDistanceMetersMax', type: 'number', emptyValue: ''},
      {id: 'durationSecondsMin', type: 'number', emptyValue: ''},
-     {id: 'durationSecondsMax', type: 'number', emptyValue: ''}
+     {id: 'durationSecondsMax', type: 'number', emptyValue: ''},
+     {id: 'pageNumber', type: 'number', emptyValue: 1},
+     {id: 'pageSize', type: 'number', emptyValue: 10},
    ];
  
    let params = {};
@@ -83,29 +86,35 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
     return response.json();
   })
   .then(data => {
-    console.log('Data received:', data);
-    if (data.errors) {
-        console.log('Error details:', data.errors);
-    } else {
-      // Get a reference to the results div
-      let resultsDiv = document.getElementById('results');
-      let foundTripsDiv = document.getElementById('foundTripsHintText');
- 
-      // Clear the current contents of the results div
-      resultsDiv.innerHTML = '';
-      foundTripsDiv.innerHTML = '';
- 
-      // Convert each item in the data array into a paragraph and append it to the results div
-      data[0].forEach(item => {
-        let p = document.createElement('p');
-        p.textContent = JSON.stringify(item);
-        resultsDiv.appendChild(p);
-      });
-      let foundTrips = data[1] 
-      foundTripsDiv.textContent = JSON.stringify(foundTrips);
-      
-    }
-  })
+  console.log('Data received:', data);
+  if (data.errors) {
+    console.log('Error details:', data.errors);
+  } else {
+    // Get a reference to the results div
+    let resultsDiv = document.getElementById('results');
+    let entryCountDiv = document.getElementById('entryCount');
+
+    // Clear the current contents of the results div
+    resultsDiv.innerHTML = '';
+    
+    // Convert each item in the data array into a paragraph and append it to the results div
+    data.data.forEach(item => {
+      let p = document.createElement('p');
+      p.textContent = JSON.stringify(item);
+      resultsDiv.appendChild(p);
+    });
+    let paginationMetadata = data.pagination;
+    
+    // Update the entry count div
+    let start = paginationMetadata.pageSize * (paginationMetadata.currentPage - 1) + 1;
+    let end = Math.min(start + paginationMetadata.pageSize - 1, paginationMetadata.totalRecords);
+    entryCountDiv.textContent = `Showing ${start}-${end} of ${paginationMetadata.totalRecords} entries`;
+
+    // TODO: Update the page navigation controls based on the paginationMetadata
+  }
+})
+
+
   .catch((error) => {
     console.error('Error:', error);
   });

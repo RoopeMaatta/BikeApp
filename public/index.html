@@ -25,8 +25,9 @@
     </div>
     
     <!-- Date and time inputs -->
-    <input id="departureDate" type="date" >
-    <input id="returnDate" type="date" >
+    <!-- Note: date picker min/max range has issues with safari, espicially on ios -->
+    <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31"  >
+    <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" >
     <div class="container">
       <input id="departureTimeMin" type="time" placeholder="Minimum departure time">
       <input id="departureTimeMax" type="time" placeholder="Maximum departure time">
@@ -36,6 +37,7 @@
       <input id="returnTimeMax" type="time" placeholder="Maximum return time">
     </div>
 
+
     <!-- Additional parameters inputs -->
     <input id="coveredDistanceMetersMin" type="text" placeholder="Minimum covered distance (meters)">
     <input id="coveredDistanceMetersMax" type="text" placeholder="Maximum covered distance (meters)">
@@ -43,13 +45,25 @@
     <input id="durationSecondsMax" type="text" placeholder="Maximum duration (seconds)">
     
   </div>
+
   
   <!-- Find Trips button -->
   <div class="container2">
-    <p id="foundTripsHintText">Find Trips</p>
+    <div id="entryCount"></div>
+
+   <!-- <p id="foundTripsHintText">Find Trips</p> -->
     <button id="findTripsButton">Find Trips</button>
   </div>
   
+
+<div>
+  <input id="pageNumber" type="number" value="1" min="1">
+  <input id="pageSize" type="number" value="10" min="1">
+  <button id="prevPageButton" disabled>Previous Page</button>
+  <button id="nextPageButton">Next Page</button>  
+</div>
+
+
   <!-- Results div -->
   <div id="results"></div>
   

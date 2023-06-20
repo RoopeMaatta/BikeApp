@@ -99,6 +99,25 @@ exports.findTripsValidation = checkSchema({
       errorMessage: 'durationSecondsMax should be a positive integer or zero',
     },
   },
+  // Add validation for pagination parameters
+  pageSize: {
+    in: ['query'],
+    optional: true,
+    isInt: { 
+      options: { min: 1 },
+      errorMessage: 'pageSize should be an integer greater than 0',
+    },
+    toInt: true,  // Convert the input to an integer
+  },
+  pageNumber: {
+    in: ['query'],
+    optional: true,
+    isInt: { 
+      options: { min: 1 },
+      errorMessage: 'pageNumber should be an integer greater than 0',
+    },
+    toInt: true,  // Convert the input to an integer
+  },
   
 });
 
