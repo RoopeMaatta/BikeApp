@@ -7,21 +7,26 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+     white-space: nowrap;
 }
 
 .container div {
-    display: grid;
+    display: flex;
     gap: 10px;
 }
 
 
-.container2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.containerFlex {
+    display: flex;
+    flex-direction: row;
     gap: 10px;
 }
 
 .item {
-    margin-bottom: 20px; /* adjust as needed */
+    margin-bottom: 0px; /* adjust as needed */
   }
+
+
+
+
   

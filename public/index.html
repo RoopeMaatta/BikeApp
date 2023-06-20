@@ -7,34 +7,52 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+
+  <h2> Find Helsinki city bike trips: </h2>
   
   <!-- Input fields for parameters -->
   <div class="container">
     <!-- Departure station ID input -->
     <div>
-      <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure station IDs (comma-separated)">
+      <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
       <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
       <div id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
     </div>
     
     <!-- Return station ID input -->
     <div>
-      <input id="returnStationInput" list="return-stations" type="text" placeholder="Return station IDs (comma-separated)">
+      <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
       <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
       <div id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
     </div>
     
     <!-- Date and time inputs -->
     <!-- Note: date picker min/max range has issues with safari, espicially on ios -->
-    <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31"  >
-    <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" >
     <div class="container">
-      <input id="departureTimeMin" type="time" placeholder="Minimum departure time">
-      <input id="departureTimeMax" type="time" placeholder="Maximum departure time">
+      Strarting from date:
+      <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31"  >
     </div>
+    
     <div class="container">
-      <input id="returnTimeMin" type="time" placeholder="Minimum return time">
-      <input id="returnTimeMax" type="time" placeholder="Maximum return time">
+      Ending by date:
+    <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" >
+    </div>
+
+    <label>Departure time:</label>
+    <label>Return time:</label>
+    
+    <div class="containerFlex">
+      From
+      <input id="departureTimeMin" type="time" > 
+      to before 
+      <input id="departureTimeMax" type="time" >
+    </div>
+
+    <div class="containerFlex">
+      From
+      <input id="returnTimeMin" type="time" >
+      to before
+      <input id="returnTimeMax" type="time" >
     </div>
 
 
@@ -48,7 +66,7 @@
 
   
   <!-- Find Trips button -->
-  <div class="container2">
+  <div class="container">
     <div id="entryCount"></div>
 
    <!-- <p id="foundTripsHintText">Find Trips</p> -->
