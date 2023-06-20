@@ -14,7 +14,8 @@ document.getElementById('findTripsButton').addEventListener('click', function() 
   fetchTrips();
 });
 
-
+// import formating function for incoming json biketrip data
+// import { formatData } from './formatData.js';
 
 function fetchTrips() {
   // Create a new URL object
@@ -104,13 +105,21 @@ function fetchTrips() {
       
       // Clear the current contents of the results div
       resultsDiv.innerHTML = '';
+      console.log('formatData:', window.formatData);
       
       // Convert each item in the data array into a paragraph and append it to the results div
-      data.data.forEach(item => {
-        let p = document.createElement('p');
-        p.textContent = JSON.stringify(item);
-        resultsDiv.appendChild(p);
+      // data.data.forEach(item => {
+      //   let p = document.createElement('p');
+      //   p.textContent = JSON.stringify(item);
+      //   resultsDiv.appendChild(p);
+      // });
+
+      data.data[0].forEach(item => {
+        let formattedItem = formatData(item);
+        resultsDiv.appendChild(formattedItem);
       });
+      console.log('formatData:', window.formatData);
+
       let paginationMetadata = data.pagination;
       
       // Update the entry count div
