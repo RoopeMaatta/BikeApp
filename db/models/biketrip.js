@@ -30,23 +30,38 @@ module.exports = (sequelize, DataTypes) => {
               return new Date(unixTimestamp * 1000);
           },
           set(value) {
-              this.setDataValue('departureTime', Math.floor(new Date(value).getTime() / 1000));
-          }
+            //console.log("Original value: ", value);
+            const correctedValue = value.replace(/T(\d):/, 'T0$1:');
+            //console.log("Corrected value: ", correctedValue);
+            const date = new Date(correctedValue + 'Z'); // Append 'Z' to interpret as UTC
+            //console.log("Date object: ", date);
+            const unixTimestamp = date.getTime() / 1000;
+            //console.log("Unix timestamp: ", unixTimestamp);
+            this.setDataValue('departureTime', unixTimestamp);
+          },
+        
+      },
+      returnTime: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+          get() {
+              const unixTimestamp = this.getDataValue('returnTime');
+              return new Date(unixTimestamp * 1000);
+          },
+          set(value) {
+            //console.log("Original value: ", value);
+            const correctedValue = value.replace(/T(\d):/, 'T0$1:');
+            //console.log("Corrected value: ", correctedValue);
+            const date = new Date(correctedValue + 'Z'); // Append 'Z' to interpret as UTC
+            //console.log("Date object: ", date);
+            const unixTimestamp = date.getTime() / 1000;
+            //console.log("Unix timestamp: ", unixTimestamp);
+            this.setDataValue('returnTime', unixTimestamp);
+          },
+        
       },
       
-      
-      returnTime: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        get() {
-            const unixTimestamp = this.getDataValue('returnTime');
-            return new Date(unixTimestamp * 1000);
-        },
-        set(value) {
-            this.setDataValue('returnTime', Math.floor(new Date(value).getTime() / 1000));
-        }
-    },
 
           departureStationId: {
             type: DataTypes.INTEGER,
