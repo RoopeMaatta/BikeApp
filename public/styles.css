@@ -6,7 +6,7 @@
 
 
 .containerMain {
-   
+    max-width: 500px;
     padding-top: 0px;
     padding-right: 15px;
     padding-bottom: 10px;
@@ -39,11 +39,15 @@
     margin-bottom: 0px; /* adjust as needed */
   }
 
-  #findTripsButton {
+  #findTripsButton, #resetSearch {
     font-weight: bold;
   }
   
-  
+  #pageSize, #pageNumber {
+    max-width: 50px; /* or any width you prefer */
+}
+
+
   
 
 
