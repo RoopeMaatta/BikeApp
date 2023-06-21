@@ -5,6 +5,20 @@
 
 const Sequelize = require("sequelize"); // Import sequelize orm module
 
+// function correctTimestampFormat(timestamp) {
+//   if (timestamp.length < 20) { // Length of a correct timestamp (YYYY-MM-DDTHH:mm:ss)
+//       const splitTimestamp = timestamp.split('-');
+//       if (splitTimestamp[0].length === 1) { // Year is only one digit
+//           splitTimestamp[0] = '202' + splitTimestamp[0]; // Assume we are in the 2020s
+//           return splitTimestamp.join('-');
+//       }
+//   }
+//   return timestamp; // If timestamp is correct, return as is
+// }
+
+
+
+
 // export placeholder function for model definition
 module.exports = (sequelize, DataTypes) => {
     class Biketrip extends Sequelize.Model {   // create subclass 
@@ -30,15 +44,14 @@ module.exports = (sequelize, DataTypes) => {
               return new Date(unixTimestamp * 1000);
           },
           set(value) {
-            //console.log("Original value: ", value);
-            const correctedValue = value.replace(/T(\d):/, 'T0$1:');
-            //console.log("Corrected value: ", correctedValue);
-            const date = new Date(correctedValue + 'Z'); // Append 'Z' to interpret as UTC
-            //console.log("Date object: ", date);
-            const unixTimestamp = date.getTime() / 1000;
-            //console.log("Unix timestamp: ", unixTimestamp);
-            this.setDataValue('departureTime', unixTimestamp);
+            if (value) {
+              this.setDataValue('departureTime', Math.floor(new Date(value).getTime() / 1000));
+            }
           },
+          // set(value) {
+          //   const correctedValue = correctTimestampFormat(value.replace(/T(\d):/, 'T0$1:'));
+          //   this.setDataValue('departureTime', new Date(correctedValue).getTime() / 1000);
+          // },
         
       },
       returnTime: {
@@ -50,15 +63,14 @@ module.exports = (sequelize, DataTypes) => {
               return new Date(unixTimestamp * 1000);
           },
           set(value) {
-            //console.log("Original value: ", value);
-            const correctedValue = value.replace(/T(\d):/, 'T0$1:');
-            //console.log("Corrected value: ", correctedValue);
-            const date = new Date(correctedValue + 'Z'); // Append 'Z' to interpret as UTC
-            //console.log("Date object: ", date);
-            const unixTimestamp = date.getTime() / 1000;
-            //console.log("Unix timestamp: ", unixTimestamp);
-            this.setDataValue('returnTime', unixTimestamp);
+            if (value) {
+              this.setDataValue('returnTime', Math.floor(new Date(value).getTime() / 1000));
+            }
           },
+          // set(value) {
+          //   const correctedValue = correctTimestampFormat(value.replace(/T(\d):/, 'T0$1:'));
+          //   this.setDataValue('returnTime', new Date(correctedValue).getTime() / 1000);
+          // },
         
       },
       

@@ -37,8 +37,8 @@ const importData = async () => {
             try {
               // Create a Biketrip record using the model
               await db.models.Biketrip.create({
-                departureTime: row['Departure'],
-                returnTime: row['Return'],
+                departureTime: new Date(row['Departure']),
+                returnTime: new Date(row['Return']),
                 departureStationId: parseInt(row['Departure station id']),
                 // departureStationName: row['Departure station name'], // omitted due to assumption of perfomance optimization
                 returnStationId: parseInt(row['Return station id']),
