@@ -1,6 +1,23 @@
 
 // How to run project - edit based on below guidelines
 
+How to run project:
+npm - i 
+node app.js
+
+Usecase and user
+This web app filters and searches trough a large quantity of biketrips made in Helsinki. 
+
+The main user of this kind of tool is assumed to be primarily city developers. They could use this tool to gain more understaing of biking patterns and find out where could be need for more infrastructure based on usage.
+
+ToDo:
+Make it pretty an usable
+
+
+
+
+
+//
 
 /*
 A good README includes the following things:

@@ -3,6 +3,16 @@
 /* Note: primary, secondary, etc with: var(--variable-name) */
 /*  */
 
+
+
+.containerMain {
+   
+    padding-top: 0px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -12,8 +22,11 @@
 
 .container div {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
 }
+
 
 
 .containerFlex {
@@ -26,6 +39,12 @@
     margin-bottom: 0px; /* adjust as needed */
   }
 
+  #findTripsButton {
+    font-weight: bold;
+  }
+  
+  
+  
 
 
 

@@ -9,7 +9,7 @@ const Sequelize = require("sequelize"); // Import sequelize orm module
 const sequelize = new Sequelize({ // Make usable instance & pass configuration object parameters
     dialect: "sqlite",
     storage: path.join(__dirname, "../database.db"), // saves to current directory
-    logging: console.log, 
+    logging: false, 
     define: {
         timestamps: false,
     },

@@ -3,7 +3,7 @@
  * Description: helperfunction to be used within at least findTrips
  */
 
-const paginate = (pageSize = 10, pageNumber = 1) => {
+const paginate = (pageSize = 50, pageNumber = 1) => {
   // Calculate offset
   const offset = (pageNumber - 1) * pageSize;
 

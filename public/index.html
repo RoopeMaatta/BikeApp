@@ -7,96 +7,106 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-
-  <h2> Find Helsinki city bike trips: </h2>
   
-  <!-- Input fields for parameters -->
-  <div class="container">
-    <!-- Departure station ID input -->
-    <div>
-      <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
-      <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
-      <div id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
-    </div>
+  <div class="containerMain">
     
-    <!-- Return station ID input -->
-    <div>
-      <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
-      <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
-      <div id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
-    </div>
+    <h2> Find Helsinki city bike trips: </h2>
     
-    <!-- Date and time inputs -->
-    <!-- Note: date picker min/max range has issues with safari, espicially on ios -->
+    <!-- Input fields for parameters -->
     <div class="container">
-      Strarting from date:
-      <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31"  >
+      <!-- Departure station ID input -->
+      <div>
+        <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
+        <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
+        <div id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
+      </div>
+      
+      <!-- Return station ID input -->
+      <div>
+        <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
+        <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
+        <div id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
+      </div>
+      
+      <!-- Date and time inputs -->
+      <!-- Note: date picker min/max range has issues with safari, espicially on ios -->
+      <div class="container">
+        Strarting from date:
+        <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31"  >
+      </div>
+      
+      <div class="container">
+        Ending by date:
+        <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" >
+      </div>
+      
+      <label>Departure time starting:</label>
+      <label>Return time starting:</label>
+      
+      <div class="containerFlex">
+        From
+        <input id="departureTimeMin" type="time" > 
+        to before 
+        <input id="departureTimeMax" type="time" >
+      </div>
+      
+      <div class="containerFlex">
+        From
+        <input id="returnTimeMin" type="time" >
+        to before
+        <input id="returnTimeMax" type="time" >
+      </div>
+      
+      
+      <!-- Additional parameters inputs -->
+      <input id="coveredDistanceMetersMin" type="text" placeholder="Minimum covered distance (meters)">
+      <input id="coveredDistanceMetersMax" type="text" placeholder="Maximum covered distance (meters)">
+      <input id="durationSecondsMin" type="text" placeholder="Minimum duration (seconds)">
+      <input id="durationSecondsMax" type="text" placeholder="Maximum duration (seconds)">
+      
     </div>
+    
+    
+    <!-- Find Trips button -->
+    <div class="container">
+      <div id="entryCount"></div>
+      
+      <!-- <p id="foundTripsHintText">Find Trips</p> -->
+      <div class="container">
+        <button id="resetSearch">reset</button> 
+        <button id="findTripsButton">Find Trips</button>
+      </div>
+    </div>
+    
     
     <div class="container">
-      Ending by date:
-    <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" >
+      Page
+      <input id="pageNumber" type="number" value="1" min="1">
+      Items/page
+      <input id="pageSize" type="number" value="50" min="1">
+      <button id="prevPageButton" disabled>Previous Page</button>
+      <button id="nextPageButton">Next Page</button>  
     </div>
-
-    <label>Departure time:</label>
-    <label>Return time:</label>
     
-    <div class="containerFlex">
-      From
-      <input id="departureTimeMin" type="time" > 
-      to before 
-      <input id="departureTimeMax" type="time" >
-    </div>
-
-    <div class="containerFlex">
-      From
-      <input id="returnTimeMin" type="time" >
-      to before
-      <input id="returnTimeMax" type="time" >
-    </div>
-
-
-    <!-- Additional parameters inputs -->
-    <input id="coveredDistanceMetersMin" type="text" placeholder="Minimum covered distance (meters)">
-    <input id="coveredDistanceMetersMax" type="text" placeholder="Maximum covered distance (meters)">
-    <input id="durationSecondsMin" type="text" placeholder="Minimum duration (seconds)">
-    <input id="durationSecondsMax" type="text" placeholder="Maximum duration (seconds)">
     
-  </div>
-
-  
-  <!-- Find Trips button -->
-  <div class="container">
-    <div id="entryCount"></div>
-
-   <!-- <p id="foundTripsHintText">Find Trips</p> -->
-    <button id="findTripsButton">Find Trips</button>
-  </div>
-  
-
-<div>
-  <input id="pageNumber" type="number" value="1" min="1">
-  <input id="pageSize" type="number" value="10" min="1">
-  <button id="prevPageButton" disabled>Previous Page</button>
-  <button id="nextPageButton">Next Page</button>  
-</div>
-
-
-
-
-  <!-- Results div -->
-  <div id="results"></div>
-  
-  <!-- JavaScript files -->
-  <script src="findTrips.js"></script>
-  <script src="suggestions.js"></script>
-  <script src="formatData.js"></script>
-  
-  <!-- Create suggestions script -->
-  <script>
-    createSuggestions('departureStationInput', '/api/suggestions', 'departureStationIds');
-    createSuggestions('returnStationInput', '/api/suggestions', 'returnStationIds');
-  </script>
-  
-</body>
-</html>
+    
+    
+    <!-- Results div -->
+    <div id="results"></div>
+    
+    
+    <div>
+      <!-- JavaScript files -->
+      <script src="findTrips.js"></script>
+      <script src="suggestions.js"></script>
+      <script src="formatData.js"></script>
+      
+      <!-- Create suggestions script -->
+      <script>
+        createSuggestions('departureStationInput', '/api/suggestions', 'departureStationIds');
+        createSuggestions('returnStationInput', '/api/suggestions', 'returnStationIds');
+      </script>
+      
+    </body>
+    </html>
+    

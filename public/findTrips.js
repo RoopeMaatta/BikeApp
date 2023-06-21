@@ -4,25 +4,7 @@
 
 
 
-
-
-document.getElementById('findTripsButton').addEventListener('click', function() {
-  // Reset the page number to 1
-  document.getElementById('pageNumber').value = 1;
-  
-  // Perform the fetch operation
-  fetchTrips();
-});
-
-// import formating function for incoming json biketrip data
-// import { formatData } from './formatData.js';
-
-function fetchTrips() {
-  // Create a new URL object
-  let url = new URL('/api/findTrips', window.location.origin);
-  
   // Gather user input into params object
-  
   let inputs = [
     {id: 'departureStationIds', type: 'array', emptyValue: '', isTagContainer: true},
     {id: 'returnStationIds', type: 'array', emptyValue: '', isTagContainer: true},
@@ -39,6 +21,13 @@ function fetchTrips() {
     {id: 'pageNumber', type: 'number', emptyValue: 1},
     {id: 'pageSize', type: 'number', emptyValue: 10},
   ];
+
+
+
+function fetchTrips() {
+  // Create a new URL object
+  let url = new URL('/api/findTrips', window.location.origin);
+  
   
   let params = {};
   
@@ -106,13 +95,6 @@ function fetchTrips() {
       // Clear the current contents of the results div
       resultsDiv.innerHTML = '';
       console.log('formatData:', window.formatData);
-      
-      // Convert each item in the data array into a paragraph and append it to the results div
-      // data.data.forEach(item => {
-      //   let p = document.createElement('p');
-      //   p.textContent = JSON.stringify(item);
-      //   resultsDiv.appendChild(p);
-      // });
 
       data.data[0].forEach(item => {
         let formattedItem = formatData(item);
@@ -146,11 +128,29 @@ function fetchTrips() {
   });
 };
 
+document.getElementById('resetSearch').addEventListener('click', resetSearch);
+function resetSearch() {
+  inputs.forEach(input => {
+    let element = document.getElementById(input.id);
+    if (input.isTagContainer) {
+      element.innerHTML = '';
+    } else {
+      element.value = input.emptyValue;
+    }
+  });
+  
+  // Clear the current contents of the results div
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('entryCount').textContent = '';
+}
 
 
-
-
-
+document.getElementById('findTripsButton').addEventListener('click', function() {
+  // Reset the page number to 1
+  document.getElementById('pageNumber').value = 1;
+  // Perform the fetch operation
+  fetchTrips();
+});
 
 document.getElementById('prevPageButton').addEventListener('click', function() {
   let pageNumberInput = document.getElementById('pageNumber');
@@ -167,3 +167,4 @@ document.getElementById('nextPageButton').addEventListener('click', function() {
   // Perform the fetch operation
   fetchTrips();
 });
+
