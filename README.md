@@ -1,5 +1,5 @@
 
-Description: Usecase and users
+**Description: Usecase and users**
 
 This web app filters and searches through a large quantity of bike trips made in Helsinki. The primary users of this tool are presumed to be city developers. They could use this tool to gain a deeper understanding of biking patterns and identify the need for additional infrastructure based on usage.
 
@@ -7,12 +7,12 @@ With a redesign of the user interface and data displayed through an interactive 
 
 
 
-How to run the project:
+**How to run the project:**
 
 1. clone repository to local machine
 2. run in terminall: 
 3. npm i
-If you get error due to a different node version run: npm rebuild
+If you get a error, for example due to a different node version, run: npm rebuild
 4. node app.js
 
 5. And done -> start testing and using the project. 
@@ -20,7 +20,7 @@ If you get error due to a different node version run: npm rebuild
 
 
 
-How to use the project: 
+**How to use the project: **
 
 Search for bike trips with any number of parameters; you can also omit any. For example, you could leave the date fields empty and search just by departure time:
 
@@ -34,7 +34,7 @@ Search for bike trips with any number of parameters; you can also omit any. For 
 ---------------------------------
 
 
-Background:
+**Background:**
 
 This is my first actual non tutorial codig project. I wanted to try to use mainly native elements so that I could get a better understanding of them. A react app using MUI library would be very good choice to use for this kind of project.
 
@@ -46,14 +46,14 @@ I started working from the backend to the frontend. I wanted to have all the fun
 
 
 
-Additional notes:
+**Additional notes:**
 The /scrips folder contains small tool scripts that I used troughout the project to help in various stages. For example tripsTableLog.sh was used in the terminal to give me a visual of what my trips table looked like and csvToDatabaseTrips.js is used to insert .cvs files to my database using my biketrip model.
 
 
 ---------------------------------
 
 
-ToDo:
+**ToDo:**
 - fix csv to database import on date to unix timestam convertion bug for some individual values
 - import full databases on a pc - it seems to be very slow on ipad running vscode on a web browser.
 - Make it pretty, more user friendly
