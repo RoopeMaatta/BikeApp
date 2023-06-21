@@ -54,6 +54,8 @@ The /scrips folder contains small tool scripts that I used troughout the project
 
 
 ToDo:
+- fix csv to database import on date to unix timestam convertion bug for some individual values
+- import full databases on a pc - it seems to be very slow on ipad running vscode on a web browser.
 - Make it pretty, more user friendly
     - format and style the page for better readability and understandability
     - take into acount different screen sizes
