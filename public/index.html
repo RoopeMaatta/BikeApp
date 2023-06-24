@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find Trips</title>
+  <title>Find Helsinki biketrips</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
@@ -63,9 +63,23 @@
       <!-- Additional parameters inputs -->
       <input id="coveredDistanceMetersMin" type="text" placeholder="Minimum covered distance (meters)">
       <input id="coveredDistanceMetersMax" type="text" placeholder="Maximum covered distance (meters)">
-      <input id="durationSecondsMin" type="text" placeholder="Minimum duration (seconds)">
-      <input id="durationSecondsMax" type="text" placeholder="Maximum duration (seconds)">
       
+
+      <label>Minimum trip duration:</label>
+      <label>Maximum trip duration:</label>
+      
+      <div class="containerFlex">
+        <input class="inputField" id="durationHoursMin" type="number" placeholder="h">
+        <input class="inputField" id="durationMinutesMin" type="number" placeholder="min">
+        <input class="inputField" id="durationSecondsMin" type="number" placeholder="s">
+      </div>
+      <div class="containerFlex">
+        <input class="inputField" id="durationHoursMax" type="number" placeholder="h">
+        <input class="inputField" id="durationMinutesMax" type="number" placeholder="min">
+        <input class="inputField" id="durationSecondsMax" type="number" placeholder="s">
+      </div>
+      
+    
     </div>
     
     

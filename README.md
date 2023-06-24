@@ -61,13 +61,14 @@ The /scrips folder contains small tool scripts that I used troughout the project
     - take into acount different screen sizes
     - format results into cards
     - group results
-    - time and distance query to km and min+s
     - hide extra settings behind advanced search button.
     - Use Mui desing librarya and for example combobox elements for better functionality and UI/UX benefits. This changes the frontend to a react app.
+    - search distance in km and meters instead of meters
 - Show query data in infromative ways (if not too heavy of a process)
     - anytime any field is modified show how many trips query would return from a search
     - for any query return a average trip of all the trips that were found: station name/multple sations, average distance, average duration
     - graph showing amount of Y: amount of trips and X: Date/time
+    - clicking on stations field shows all station suggestions. (currently typing makes the fetch request based on what is typed)
 - Tests
     - figure out how to do tests and do them.
 - Map user interface

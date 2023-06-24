@@ -27,8 +27,6 @@
     gap: 10px;
 }
 
-
-
 .containerFlex {
     display: flex;
     flex-direction: row;
@@ -48,8 +46,10 @@
 }
 
 
+.inputField {
+    display: inline-block;
+    max-width: 20px;
+  }
   
-
-
 
   

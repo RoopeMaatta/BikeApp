@@ -34,7 +34,11 @@ const findTrips = async (req, res, next) => {
     returnTimeMax,
     coveredDistanceMetersMin,
     coveredDistanceMetersMax,
+    durationHoursMin,
+    durationMinutesMin,
     durationSecondsMin,
+    durationHoursMax,
+    durationMinutesMax,
     durationSecondsMax
   } = req.query;
   
@@ -109,10 +113,15 @@ const findTrips = async (req, res, next) => {
     if (coveredDistanceMetersMin) where.coveredDistanceMeters[Op.gte] = Number(coveredDistanceMetersMin);
     if (coveredDistanceMetersMax) where.coveredDistanceMeters[Op.lte] = Number(coveredDistanceMetersMax);
   }
-  if (durationSecondsMin || durationSecondsMax) {
+  
+  if (durationHoursMin || durationMinutesMin || durationSecondsMin || durationHoursMax || durationMinutesMax || durationSecondsMax) {
     where.durationSeconds = {};
-    if (durationSecondsMin) where.durationSeconds[Op.gte] = Number(durationSecondsMin);
-    if (durationSecondsMax) where.durationSeconds[Op.lte] = Number(durationSecondsMax);
+  
+    let durationSecondsMinTotal = (Number(durationHoursMin || 0) * 3600) + (Number(durationMinutesMin || 0) * 60) + Number(durationSecondsMin || 0);
+    let durationSecondsMaxTotal = (Number(durationHoursMax || 0) * 3600) + (Number(durationMinutesMax || 0) * 60) + Number(durationSecondsMax || 0);
+  
+    if (durationSecondsMinTotal) where.durationSeconds[Op.gte] = durationSecondsMinTotal;
+    if (durationSecondsMaxTotal) where.durationSeconds[Op.lte] = durationSecondsMaxTotal;
   }
   
   

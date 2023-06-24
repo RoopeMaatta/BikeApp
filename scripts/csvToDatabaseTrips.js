@@ -10,7 +10,7 @@ const importData = async () => {
        
         // for all but bikestation.csv continue
         for (const file of csvFiles) {
-        if (file === 'bikeStations.csv' || file === "test.csv" || file === "testTripsData.csv" ) {
+        if (file === 'bikeStations.csv' || file === "testTrips.csv" ) {
           console.log(`Skipping file: ${file}`);
           continue;
         }

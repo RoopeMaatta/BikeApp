@@ -16,7 +16,11 @@
     {id: 'returnTimeMax', emptyValue: '', type: 'time' },
     {id: 'coveredDistanceMetersMin', type: 'number', emptyValue: ''},
     {id: 'coveredDistanceMetersMax', type: 'number', emptyValue: ''},
+    {id: 'durationHoursMin', type: 'number', emptyValue: ''},
+    {id: 'durationMinutesMin', type: 'number', emptyValue: ''},
     {id: 'durationSecondsMin', type: 'number', emptyValue: ''},
+    {id: 'durationHoursMax', type: 'number', emptyValue: ''},
+    {id: 'durationMinutesMax', type: 'number', emptyValue: ''},
     {id: 'durationSecondsMax', type: 'number', emptyValue: ''},
     {id: 'pageNumber', type: 'number', emptyValue: 1},
     {id: 'pageSize', type: 'number', emptyValue: 10},
@@ -46,6 +50,15 @@ function fetchTrips() {
           params[input.id] = inputValue;
         } else if (input.type === 'number') {
           params[input.id] = Number(inputValue);
+        } else if (input.id.startsWith('duration')) {
+          let baseId = input.id.replace(/Hours|Minutes|Seconds/g, '');
+              
+          let hours = Number(document.getElementById(baseId + 'Hours').value) || 0;
+          let minutes = Number(document.getElementById(baseId + 'Minutes').value) || 0;
+          let seconds = Number(document.getElementById(baseId + 'Seconds').value) || 0;
+              
+          let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+          params[baseId] = totalSeconds;
         } else {
           params[input.id] = inputValue;
         }
@@ -94,13 +107,13 @@ function fetchTrips() {
       
       // Clear the current contents of the results div
       resultsDiv.innerHTML = '';
-      console.log('formatData:', window.formatData);
+      //console.log('formatData:', window.formatData);
 
       data.data[0].forEach(item => {
         let formattedItem = formatData(item);
         resultsDiv.appendChild(formattedItem);
       });
-      console.log('formatData:', window.formatData);
+      //console.log('formatData:', window.formatData);
 
       let paginationMetadata = data.pagination;
       
