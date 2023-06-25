@@ -2,7 +2,7 @@
 * Description: Set user input to use the fetchtrips api
 */
 
-
+import { formatData } from './formatData.js';
 
   // Gather user input into params object
   let inputs = [

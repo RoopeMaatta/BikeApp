@@ -2,7 +2,8 @@
 * Description: formats incoming biketrip json data
 */
 
-window.formatData = function(item) {
+//window.formatData = function(item) {
+  export function formatData(item) {
   let div = document.createElement('div');
   div.className = "item";
 
@@ -31,3 +32,4 @@ window.formatData = function(item) {
 
   return div;
 };
+

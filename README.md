@@ -62,7 +62,7 @@ The /scrips folder contains small tool scripts that I used troughout the project
     - format results into cards/grids: .gridSearch .GridResults .cell(Flex?) .label .content .map(placeholder) 
     - group results
     - hide extra settings behind advanced search button.
-    - Use Mui desing librarya and for example combobox elements for better functionality and UI/UX benefits. This changes the frontend to a react app.
+    - Use Mui desing library and for example combobox elements for better functionality and UI/UX benefits. This changes the frontend to a react app.
     - search distance in km and meters instead of meters
     - Fix page number search. Currently find Trips sets the page to 1. It should check if the the page number has changed, but the query has not -> and in those cases it should not set the page number to 1.
     
