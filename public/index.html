@@ -10,7 +10,7 @@
   
   <div class="containerMain">
     
-    <h2> Find Helsinki city bike trips 2021-05-XX: </h2>
+    <h1> Find Helsinki city bike trips 2021-05-XX: </h2>
 
     <button id="resetSearch">reset</button> 
     
@@ -95,11 +95,12 @@
     </div>
     
     
-    <div>
+    <div class="containerFlex">
       Page
-      <input id="pageNumber" type="number" value="1" min="1">
+      <input class="inputField" id="pageNumber" type="number" value="1" min="1">
+      <div id="pageNumberMax"> </div>
+      <input class="inputField" id="pageSize" type="number" value="50" min="1">
       Items/page
-      <input id="pageSize" type="number" value="50" min="1">
       <button id="prevPageButton" disabled>Previous Page</button>
       <button id="nextPageButton">Next Page</button>  
     </div>

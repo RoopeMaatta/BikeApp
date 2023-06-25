@@ -23,9 +23,8 @@
     {id: 'durationMinutesMax', type: 'number', emptyValue: ''},
     {id: 'durationSecondsMax', type: 'number', emptyValue: ''},
     {id: 'pageNumber', type: 'number', emptyValue: 1},
-    {id: 'pageSize', type: 'number', emptyValue: 10},
+    {id: 'pageSize', type: 'number', emptyValue: 50},
   ];
-
 
 
 function fetchTrips() {
@@ -122,6 +121,10 @@ function fetchTrips() {
       let end = Math.min(start + paginationMetadata.pageSize - 1, paginationMetadata.totalRecords);
       entryCountDiv.textContent = `Showing ${start}-${end} of ${paginationMetadata.totalRecords} entries`;
       
+      // Maximum number of pages
+      let maxPageNumber = Math.ceil(paginationMetadata.totalRecords / end)
+      document.getElementById("pageNumberMax").textContent = `/ ${maxPageNumber}`
+
       // Update the page navigation controls based on the paginationMetadata
       let prevButton = document.getElementById('prevPageButton');
       let nextButton = document.getElementById('nextPageButton');
@@ -157,6 +160,16 @@ function resetSearch() {
   document.getElementById('entryCount').textContent = '';
 }
 
+
+// enter key stroke activates query search
+document.addEventListener('keydown', enterPressed);
+function enterPressed(event) {
+  // Check if 'Enter' was pressed when not in any input field
+  if (event.key === 'Enter' ) {     // && document.activeElement.tagName !== 'INPUT') {
+      // If so, trigger the button click
+      document.getElementById('findTripsButton').click();
+  }
+}
 
 document.getElementById('findTripsButton').addEventListener('click', function() {
   // Reset the page number to 1

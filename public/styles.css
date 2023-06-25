@@ -41,11 +41,7 @@
     font-weight: bold;
   }
   
-  #pageSize, #pageNumber {
-    max-width: 50px; /* or any width you prefer */
-}
-
-
+ 
 .inputField {
     display: inline-block;
     max-width: 20px;
