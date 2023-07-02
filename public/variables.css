@@ -1,0 +1,41 @@
+:root {
+    --colors-primary: #3366FF;
+    --colors-secondary: #FF6633;
+    --colors-selected-input:rgba(130, 170, 190, 0.2);
+    --colors-background: #FFFFFF;
+    --colors-text: #333333;
+    --colors-text-secondary: #5a5a5a;
+    --colors-success: #28a745;
+    --colors-error: #dc3545;
+    
+    /* Ypx(horistontal) Xpx(vertical) Bpx(Blur) rgba(r g b transparency)*/
+    --shadows-small: 0px 0.5px 2px rgba(200, 200, 200, 0.6);
+    --shadows-medium: -2px 1px 6px rgba(150,150, 150, 0.2);
+    --shadows-large: 0px 0px 50px rgba(100, 100, 100, 0.05);
+  
+   /* --typography-fontFamily: 'Roboto', sans-serif; */
+    --typography-fontSize-small: clamp(0.9rem, 1vw, 1rem);
+    --typography-fontSize-body: clamp(1rem, 2vw, 1.5rem);
+    --typography-fontSize-large: clamp(2rem, 3vw, 3rem);
+  
+    /*
+    --breakpoints-small: 480px;
+    --breakpoints-medium: 768px;
+    --breakpoints-large: 1024px;
+  
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 32px;
+  
+    --borders-radius: 4px;
+    --borders-style: solid;
+    --borders-color: #333333;
+    --borders-width: 1px;
+  
+    --transitions-short: 0.1s ease;
+    --transitions-medium: 0.3s ease;
+    --transitions-long: 0.5s ease;
+
+    */
+  }
+  

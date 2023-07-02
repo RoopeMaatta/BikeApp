@@ -54,7 +54,7 @@ The /scrips folder contains small tool scripts that I used troughout the project
 
 
 **ToDo:**
-- fix csv to database import on date to unix timestam convertion bug for some individual values
+- fix csv to database import on date to unix timestamp convertion bug for some individual values
 - import full databases on a pc - it seems to be very slow on ipad running vscode on a web browser.
 - Make it pretty, more user friendly
     - format and style the page for better readability and understandability
@@ -65,14 +65,14 @@ The /scrips folder contains small tool scripts that I used troughout the project
     - Use Mui desing library and for example combobox elements for better functionality and UI/UX benefits. This changes the frontend to a react app.
     - search distance in km and meters instead of meters
     - Fix page number search. Currently find Trips sets the page to 1. It should check if the the page number has changed, but the query has not -> and in those cases it should not set the page number to 1.
-    
 - Show query data in infromative ways (if not too heavy of a process)
     - anytime any field is modified show how many trips query would return from a search
-    - for any query return a average trip of all the trips that were found: station name/multple sations, average distance, average duration
+    - for any query return a average trip of all the trips that were found: station name/multiple sations, average distance, average duration
     - graph showing amount of Y: amount of trips and X: Date/time
-    - clicking on stations field shows all station suggestions. (currently typing makes the fetch request based on what is typed)
+    - clicking on stations field shows all station suggestions. (currently typing makes the fetch request based on what is typed). Could/should add infinite scroll pagination to the queries if possible. This though might not be at all needed if changing to React MUI ComboBox at some point.
 - Tests
     - figure out how to do tests and do them.
+    - reformat code into smaller testable pieces
 - Map user interface
     - in narrow screens on top, and wider to the right.
     - circles for each station, radius for all minDistanceBetweenAnyStation/2.1

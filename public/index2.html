@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="variables.css">
+  <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+  <button onclick="location.href='index.html'">Switch to index.html</button>
+  <!--  -->
+  <h1>Headding</h1>
+  
+  <main class="grid-container">
+    <section class="grid-item" id="stations">
+      <h2>Stations</h2>
+      <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
+      <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
+      <div class="selectedStations" id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
+      
+      <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
+      <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
+      <div class="selectedStations" id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
+    </section> <!--stations end-->
+   
+    <section class="grid-item" id="date">
+      <h2>Date</h2>
+      <div class="grid-container-inner">
+        
+          <label for="departureDate" class="align-right" >Departure</label>
+          <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31" class="align-left"  >
+          <label for="returnDate" class="align-right" >Return</label>
+          <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" class="align-left" >
+        
+      </div>
+    </section> <!--date end-->
+    
+    <section class="grid-item" id="time">
+      <h2>Time</h2>
+      <div class="grid-container-inner">
+        <div class="align-right">
+          <label for="departureTimeMin">Min</label>
+          <input id="departureTimeMin" type="time" > 
+        </div>
+        <div class="align-left">
+          <input id="departureTimeMax" type="time" >
+          <label for="departureTimeMax"> Max</label>  
+        </div>
+        
+        <div class="align-right">
+          <input id="returnTimeMin" type="time"  >
+        </div>
+        <div class="align-left">
+          <input id="returnTimeMax" type="time"  >
+        </div>
+
+        </div>
+    </section> <!--Time end-->
+    
+    <section class="grid-item">4 Dist1Dist2 Time1Time2</section>
+    <section class="grid-item">5 Errormessage</section>
+    <section class="grid-item">6 Page/results Reset Search</section>
+    <section class="grid-item">7 Average Trip</section>
+    <section class="grid-item">8 GraphTimexTrips</section>
+    <section class="grid-item">9 Results</section>
+    <section class="grid-item">10 Page/results Reset Search</section>
+    <section class="grid-item">11 Testing 
+      <label for="Test"> This is a test</label>
+    </section>
+    
+
+    
+    <!-- More rows here -->
+    
+
+
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div> 
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div> 
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div> 
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div> 
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div> 
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    <div class="grid-item">xx filler </div>
+    
+  </main>
+  
+  
+  
+  <!-- JavaScript files -->
+  <script type="module" src="findTrips.js"></script>
+  <script src="suggestions.js"></script>
+  <script type="module" src="formatData.js"></script>
+  
+  <!-- Create suggestions script -->
+  <script>
+    createSuggestions('departureStationInput', '/api/suggestions', 'departureStationIds');
+    createSuggestions('returnStationInput', '/api/suggestions', 'returnStationIds');
+  </script>
+</body>
+</html>

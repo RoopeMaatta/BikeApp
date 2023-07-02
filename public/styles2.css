@@ -1,0 +1,120 @@
+html {
+  font-size: 16px; /* Specify your desired font size */
+  
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1em;
+  padding: 1em;
+}
+
+@media (min-width: 1200px) {
+  .grid-container {
+    grid-template-columns: repeat(2, minmax(200px, 400px));
+  }
+}
+
+.grid-container-inner {
+  display: grid;
+  /*grid-template-columns: repeat(auto-fit, minmax(10%, 1fr));*/
+  grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  column-gap: 5px;
+}
+
+
+
+.grid-item {
+  padding: 1em;
+  background-color: var(--colors-background);
+  border-radius: 15px;
+  box-shadow: 
+  var(--shadows-small),
+  var(--shadows-medium),
+  var(--shadows-large);
+  
+  /* border: 1px solid #000; */
+  text-align: center;
+  
+}
+
+
+.grid-item label {
+  font-size: var(--typography-fontSize-body);
+}
+.grid-item input {
+  margin-bottom: 0.5em;
+}
+
+
+
+.grid-input {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0%, 1fr)); 
+  gap: 5px; 
+  align-content: center;
+  align-items: flex-start;
+  justify-items: center;
+}
+
+
+.align-right {
+ 
+  text-align: right;
+ 
+}
+
+
+.align-left {
+ 
+  text-align: left;
+ 
+}
+
+/*
+.grid-input label {
+  align-content: right;
+}
+
+.grid-input input {
+  align-content: left;
+}
+*/
+
+
+.selectedStations span {
+  display: inline-block;
+  padding: 5px;
+  background-color: var(--colors-selected-input);
+  border-radius: 20px;  
+  margin: 5px;  
+  color: var(--colors-text-secondary);
+  font-size: var(--typography-fontSize-small);
+
+}
+
+.remove-button {
+  margin-left: 10px;  
+}
+
+
+
+/*Testing*/
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left, .right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.left label, .right label {
+  margin-right: 10px;
+}
+
