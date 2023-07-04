@@ -122,8 +122,10 @@ const findTrips = async (req, res, next) => {
   
     if (durationSecondsMinTotal) where.durationSeconds[Op.gte] = durationSecondsMinTotal;
     if (durationSecondsMaxTotal) where.durationSeconds[Op.lte] = durationSecondsMaxTotal;
+  
   }
   
+
   
 
   // Extract page size and page number from query parameters

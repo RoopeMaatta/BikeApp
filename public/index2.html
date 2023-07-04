@@ -7,12 +7,11 @@
 <body>
   <button onclick="location.href='index.html'">Switch to index.html</button>
   <!--  -->
-  <h1>Bike Trips in Helsinki (Date-Date)</h1>
+  <h1>Bike Trips in Helsinki (2021.05.19 - .05.31)</h1>
   
   <main class="grid-container">
     <!--Input Start-->
     <div class=" grid-container grid-item-full-width grid-item no-gap"> 
-    
     
     <section id="stations" class="grid-item">
       <h2>Stations</h2>
@@ -40,10 +39,10 @@
       <div class="grid-container-inner-3column">
         <div></div>
         <div class="align-right">
-          <span>Min</span>
+          <span>Start</span>
         </div>
         <div class="align-left">
-          <span>Max</span>
+          <span>End</span>
         </div>
         <span class="align-right">Departure</span>
         <div class="align-right">
@@ -67,10 +66,16 @@
       <h2> Distance & Duration</h2>
       <div class="grid-container-inner">
         <div class="align-right">
-          <input id="coveredDistanceMetersMin" type="text" placeholder="Min (m)" >
+          <span>Minimum</span>
         </div>
         <div class="align-left">
-          <input id="coveredDistanceMetersMax" type="text" placeholder="Max (m)">
+          <span>Maximum</span>
+        </div>
+        <div class="align-right">
+          <input id="coveredDistanceMetersMin" type="text" placeholder="Meters" >
+        </div>
+        <div class="align-left">
+          <input id="coveredDistanceMetersMax" type="text" placeholder="Meters">
         </div>
       </div> <!--Distance end-->
       <div class="grid-container-inner">
@@ -87,34 +92,21 @@
       </div><!--Duration end-->
     </section> <!--Distance Duration end-->
     
+    <section id="search" class="grid-item grid-item-full-width">
+    <div>
+      <button id="resetSearch" class="button-big" >reset</button>
+      <button id="findTripsButton" class="button-big">Find Trips</button> 
+    </div>
+    </section><!--Search end-->
+  
   </div> <!--Input End-->
     
-
-
-
-    
-    <section id="error-message" class="grid-item grid-item-full-width">5 Error message shown if something went wrong - otherwise hidden
+    <section id="error-message" class="grid-item grid-item-full-width">
+      <!-- Dynamically populated and shown when error is catched-->
     </section> <!--Error message end-->
     
     
-    <section id="search" class="grid-item grid-item-full-width">
-      <div>
-        <button id="resetSearch" class="button-big" >reset</button>
-        <button id="findTripsButton" class="button-big">Find Trips</button> 
-      </div>
-      
-      <div>
-        <span>Page</span>
-        <input id="pageNumber" class="input-small" type="number" value="1" min="1">
-        <span id="pageNumberMax"> </span>
-        <input id="pageSize" class="input-small type="number" value="50" min="1">
-        <span>Items/page</span>
-      </div>  
-      <button id="prevPageButton" disabled>Previous Page</button>
-      <button id="nextPageButton">Next Page</button>  
-      <div id="entryCount"></div>
-    </section><!--Search end-->
-    
+  
     <!-- 
       <section class="grid-item">7 Average Trip</section>
       <section class="grid-item">8 GraphTimexTrips</section>
@@ -128,9 +120,19 @@
     
     
     
-<!--     
-    <section class="grid-item">10 Page/results Reset Search</section>
-     -->
+    <section id="pages" class="grid-item grid-item-full-width">
+      <div>
+        <span>Page</span>
+        <input id="pageNumber" class="input-small" type="number" value="1" min="1">
+        <span id="pageNumberMax"> </span>
+        <input id="pageSize" class="input-small" type="number" value="16" min="1">
+        <span>Items/page</span>
+      </div>  
+      <button id="prevPageButton" disabled>Previous Page</button>
+      <button id="nextPageButton">Next Page</button>  
+      <div id="entryCount"></div>
+    </section> <!--Pages end-->
+    
     
   
   </main>

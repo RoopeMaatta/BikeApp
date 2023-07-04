@@ -83,22 +83,68 @@ exports.findTripsValidation = checkSchema({
       errorMessage: 'coveredDistanceMetersMax should be a positive integer or zero',
     },
   },
-  durationSecondsMin: {
-    in: ['query'],
-    optional: true,
-    isInt: {
-      options: { min: 0 },
-      errorMessage: 'durationSecondsMin should be a positive integer or zero',
-    },
+
+
+  durationHoursMin: {
+  in: ['query'],
+  optional: true,
+  isNumeric: {
+    errorMessage: 'durationHoursMin should be a number'
   },
-  durationSecondsMax: {
-    in: ['query'],
-    optional: true,
-    isInt: {
-      options: { min: 0 },
-      errorMessage: 'durationSecondsMax should be a positive integer or zero',
-    },
+  isInt: {
+    options: { min: 0 },
+    errorMessage: 'durationHoursMin should be a positive integer or zero',
   },
+},
+durationMinutesMin: {
+  in: ['query'],
+  optional: true,
+  isNumeric: {
+    errorMessage: 'durationMinutesMin should be a numeric value'
+  },
+  isInt: {
+    options: { min: 0 },
+    errorMessage: 'durationMinutesMin should be a positive integer or zero',
+  },
+},
+durationSecondsMin: {
+  in: ['query'],
+  optional: true,
+  isNumeric: {
+    errorMessage: 'durationSecondsMin should be a numeric value'
+  },
+  isInt: {
+    options: { min: 0 },
+    errorMessage: 'durationSecondsMin should be a positive integer or zero',
+  },
+},
+durationHoursMax: {
+  in: ['query'],
+  optional: true,
+  isInt: {
+    options: { min: 0 },
+    errorMessage: 'durationHoursMax should be a positive integer or zero',
+  },
+},
+durationMinutesMax: {
+  in: ['query'],
+  optional: true,
+  isInt: {
+    options: { min: 0 },
+    errorMessage: 'durationMinutesMax should be a positive integer or zero',
+  },
+},
+durationSecondsMax: {
+  in: ['query'],
+  optional: true,
+  isInt: {
+    options: { min: 0 },
+    errorMessage: 'durationSecondsMax should be a positive integer or zero',
+  },
+},
+
+
+
   // Add validation for pagination parameters
   pageSize: {
     in: ['query'],

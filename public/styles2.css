@@ -14,11 +14,16 @@ h2 {
   padding: 1em;
 }
 
-@media (min-width: 1200px) {
-  .grid-container {
-    grid-template-columns: repeat(2, minmax(200px, 400px));
+/*Apply the following CSS rules when the viewport width is at least equal to the width of 4 columns with 3 gaps*/
+@media (min-width: calc(200px * 4 + 1rem * 3)) {
+  #results > div {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0.5em 1em;
   }
 }
+
 
 .grid-container-inner {
   display: grid;
@@ -118,6 +123,11 @@ input[type="number"] {
   
 }
 
+.error {
+  color: var(--colors-error);
+  box-shadow: 0 0 10px var(--colors-error);
+}
+
 #error-message {
   display: none;
   color: var(--colors-error);
@@ -131,3 +141,10 @@ input[type="number"] {
   min-width: 20px;
   max-width: 40px;
 }
+
+#findTripsButton {
+  font-weight: bold;
+  
+}
+
+

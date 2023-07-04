@@ -24,7 +24,7 @@ import { displayError, hideError } from './errorHandler.js';
     {id: 'durationMinutesMax', type: 'number', emptyValue: ''},
     {id: 'durationSecondsMax', type: 'number', emptyValue: ''},
     {id: 'pageNumber', type: 'number', emptyValue: 1},
-    {id: 'pageSize', type: 'number', emptyValue: 50},
+    {id: 'pageSize', type: 'number', emptyValue: 16},
   ];
 
 

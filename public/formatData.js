@@ -7,7 +7,6 @@
   let div = document.createElement('div');
   div.className = "grid-item";
 
-  let details = document.createElement('p');
 
   let seconds = item.durationSeconds;
   let hours = Math.floor(seconds / 3600);
@@ -24,11 +23,11 @@
     formattedDuration = `${seconds}s`;
   }
 
-  details.innerHTML = `${item.departureStationName} -> ${item.returnStationName}<br />` +
-  `${item.departureTime} -> ${item.returnTime}<br />` +
-  `Distance: ${(item.coveredDistanceMeters / 1000).toFixed(2)}km. Duration: ${formattedDuration}`;
-  
-  div.appendChild(details);
+  div.innerHTML = 
+  `<div>${item.departureStationName} -> ${item.returnStationName}</div>` +
+  `<div>${item.departureTime} -> ${item.returnTime}</div>` +
+  `<div>Distance: ${(item.coveredDistanceMeters / 1000).toFixed(2)}km. Duration: ${formattedDuration}</div>`;
+
 
   return div;
 };
