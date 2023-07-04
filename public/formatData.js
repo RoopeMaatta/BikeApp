@@ -5,7 +5,7 @@
 //window.formatData = function(item) {
   export function formatData(item) {
   let div = document.createElement('div');
-  div.className = "item";
+  div.className = "grid-item";
 
   let details = document.createElement('p');
 

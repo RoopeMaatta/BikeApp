@@ -7,101 +7,132 @@
 <body>
   <button onclick="location.href='index.html'">Switch to index.html</button>
   <!--  -->
-  <h1>Headding</h1>
+  <h1>Bike Trips in Helsinki (Date-Date)</h1>
   
   <main class="grid-container">
-    <section class="grid-item" id="stations">
+    <!--Input Start-->
+    <div class=" grid-container grid-item-full-width grid-item no-gap"> 
+    
+    
+    <section id="stations" class="grid-item">
       <h2>Stations</h2>
       <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
-      <datalist id="departure-stations"> <!-- Populated dynamically --> </datalist>
-      <div class="selectedStations" id="departureStationIds"> <!-- Selected stations will appear here as tags --> </div>
+      <datalist id="departure-stations" > <!-- Populated dynamically --> </datalist>
+      <div id="departureStationIds" class="selectedStations"> <!-- Selected stations will appear here as tags --> </div>
       
       <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
-      <datalist id="return-stations"> <!-- Populated dynamically --> </datalist>
-      <div class="selectedStations" id="returnStationIds"> <!-- Selected stations will appear here as tags --> </div>
+      <datalist id="return-stations" > <!-- Populated dynamically --> </datalist>
+      <div id="returnStationIds" class="selectedStations"  > <!-- Selected stations will appear here as tags --> </div>
     </section> <!--stations end-->
-   
-    <section class="grid-item" id="date">
+    
+    <section id="date" class="grid-item">
       <h2>Date</h2>
       <div class="grid-container-inner">
-        
-          <label for="departureDate" class="align-right" >Departure</label>
-          <input id="departureDate" type="date" min="2021-05-19" max="2021-05-31" class="align-left"  >
-          <label for="returnDate" class="align-right" >Return</label>
-          <input id="returnDate" type="date" min="2021-05-19" max="2021-05-31" class="align-left" >
-        
+        <label for="departureDate" class="align-right" >Departure</label>
+        <input id="departureDate" class="align-left" type="date" min="2021-05-19" max="2021-05-31"   >
+        <label for="returnDate" class="align-right" >Return</label>
+        <input id="returnDate" class="align-left" type="date" min="2021-05-19" max="2021-05-31"  >
       </div>
     </section> <!--date end-->
     
-    <section class="grid-item" id="time">
+    <section id="time" class="grid-item">
       <h2>Time</h2>
-      <div class="grid-container-inner">
+      <div class="grid-container-inner-3column">
+        <div></div>
         <div class="align-right">
-          <label for="departureTimeMin">Min</label>
+          <span>Min</span>
+        </div>
+        <div class="align-left">
+          <span>Max</span>
+        </div>
+        <span class="align-right">Departure</span>
+        <div class="align-right">
           <input id="departureTimeMin" type="time" > 
         </div>
         <div class="align-left">
           <input id="departureTimeMax" type="time" >
-          <label for="departureTimeMax"> Max</label>  
         </div>
-        
+        <span class="align-right">Return</span>
         <div class="align-right">
           <input id="returnTimeMin" type="time"  >
         </div>
         <div class="align-left">
           <input id="returnTimeMax" type="time"  >
         </div>
-
-        </div>
+        
+      </div>
     </section> <!--Time end-->
     
-    <section class="grid-item">4 Dist1Dist2 Time1Time2</section>
-    <section class="grid-item">5 Errormessage</section>
-    <section class="grid-item">6 Page/results Reset Search</section>
-    <section class="grid-item">7 Average Trip</section>
-    <section class="grid-item">8 GraphTimexTrips</section>
-    <section class="grid-item">9 Results</section>
+    <section id="distance-duration" class="grid-item">
+      <h2> Distance & Duration</h2>
+      <div class="grid-container-inner">
+        <div class="align-right">
+          <input id="coveredDistanceMetersMin" type="text" placeholder="Min (m)" >
+        </div>
+        <div class="align-left">
+          <input id="coveredDistanceMetersMax" type="text" placeholder="Max (m)">
+        </div>
+      </div> <!--Distance end-->
+      <div class="grid-container-inner">
+        <div class="align-right no-gap">
+          <input id="durationHoursMin" type="number" placeholder="h">
+          <input id="durationMinutesMin" type="number" placeholder="min">
+          <input id="durationSecondsMin" type="number" placeholder="s">
+        </div>
+        <div class="align-left no-gap" class="no-padding">
+          <input id="durationHoursMax" type="number" placeholder="h">
+          <input id="durationMinutesMax" type="number" placeholder="min">
+          <input id="durationSecondsMax" type="number" placeholder="s">
+        </div>
+      </div><!--Duration end-->
+    </section> <!--Distance Duration end-->
+    
+  </div> <!--Input End-->
+    
+
+
+
+    
+    <section id="error-message" class="grid-item grid-item-full-width">5 Error message shown if something went wrong - otherwise hidden
+    </section> <!--Error message end-->
+    
+    
+    <section id="search" class="grid-item grid-item-full-width">
+      <div>
+        <button id="resetSearch" class="button-big" >reset</button>
+        <button id="findTripsButton" class="button-big">Find Trips</button> 
+      </div>
+      
+      <div>
+        <span>Page</span>
+        <input id="pageNumber" class="input-small" type="number" value="1" min="1">
+        <span id="pageNumberMax"> </span>
+        <input id="pageSize" class="input-small type="number" value="50" min="1">
+        <span>Items/page</span>
+      </div>  
+      <button id="prevPageButton" disabled>Previous Page</button>
+      <button id="nextPageButton">Next Page</button>  
+      <div id="entryCount"></div>
+    </section><!--Search end-->
+    
+    <!-- 
+      <section class="grid-item">7 Average Trip</section>
+      <section class="grid-item">8 GraphTimexTrips</section>
+    -->
+    
+    
+    
+    <section id="results" class="grid-container grid-item-full-width no-gap">
+      <!--Dynamically populated-->
+    </section> <!--Results end-->
+    
+    
+    
+<!--     
     <section class="grid-item">10 Page/results Reset Search</section>
-    <section class="grid-item">11 Testing 
-      <label for="Test"> This is a test</label>
-    </section>
+     -->
     
-
-    
-    <!-- More rows here -->
-    
-
-
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div> 
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div> 
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div> 
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div> 
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div> 
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    <div class="grid-item">xx filler </div>
-    
+  
   </main>
   
   

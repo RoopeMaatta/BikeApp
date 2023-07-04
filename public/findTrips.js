@@ -3,6 +3,7 @@
 */
 
 import { formatData } from './formatData.js';
+import { displayError, hideError } from './errorHandler.js';
 
   // Gather user input into params object
   let inputs = [
@@ -99,7 +100,9 @@ function fetchTrips() {
     console.log('Data received:', data);
     if (data.errors) {
       console.log('Error details:', data.errors);
+      displayError(data.errors)
     } else {
+      hideError(); 
       // Get a reference to the results div
       let resultsDiv = document.getElementById('results');
       let entryCountDiv = document.getElementById('entryCount');
@@ -140,12 +143,14 @@ function fetchTrips() {
   })
   
   .catch((error) => {
+    displayError(error);
     console.error('Error:', error);
   });
 };
 
 document.getElementById('resetSearch').addEventListener('click', resetSearch);
 function resetSearch() {
+  hideError();
   inputs.forEach(input => {
     let element = document.getElementById(input.id);
     if (input.isTagContainer) {

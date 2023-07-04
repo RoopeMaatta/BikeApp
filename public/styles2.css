@@ -3,6 +3,10 @@ html {
   
 }
 
+h2 {
+  margin: var(--spacing-small) 0px var(--spacing-small) 0px;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -20,9 +24,17 @@ html {
   display: grid;
   /*grid-template-columns: repeat(auto-fit, minmax(10%, 1fr));*/
   grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
-  column-gap: 5px;
+  column-gap: var(--spacing-small);
 }
 
+
+.grid-container-inner-3column {
+  display: grid;
+  /*grid-template-columns: repeat(auto-fit, minmax(10%, 1fr));*/
+  grid-template-columns: 1fr auto 1fr;
+  column-gap: var(--spacing-small);
+  
+}
 
 
 .grid-item {
@@ -33,88 +45,89 @@ html {
   var(--shadows-small),
   var(--shadows-medium),
   var(--shadows-large);
-  
-  /* border: 1px solid #000; */
   text-align: center;
-  
 }
 
 
-.grid-item label {
+.grid-item label, .grid-item span {
   font-size: var(--typography-fontSize-body);
 }
 .grid-item input {
   margin-bottom: 0.5em;
 }
+.grid-item-full-width {
+  grid-column: 1 / -1;
+}
 
-
-
+/* 
 .grid-input {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0%, 1fr)); 
-  gap: 5px; 
+  gap: var(--spacing-small); 
   align-content: center;
   align-items: flex-start;
   justify-items: center;
+} */
+
+
+.align-right, .align-left{
+  display: flex;
+  gap: var(--spacing-small);
 }
 
-
 .align-right {
- 
-  text-align: right;
+  justify-content: flex-end;
  
 }
 
 
 .align-left {
+  justify-content: flex-start;
  
-  text-align: left;
- 
 }
-
-/*
-.grid-input label {
-  align-content: right;
-}
-
-.grid-input input {
-  align-content: left;
-}
-*/
 
 
 .selectedStations span {
   display: inline-block;
-  padding: 5px;
+  padding: 0.2em 0.5em;
   background-color: var(--colors-selected-input);
-  border-radius: 20px;  
-  margin: 5px;  
+  border-radius: 20px; 
+  margin: var(--spacing-mini);  
   color: var(--colors-text-secondary);
   font-size: var(--typography-fontSize-small);
 
 }
 
 .remove-button {
-  margin-left: 10px;  
+  margin-left: var(--spacing-small);  
 }
 
 
-
-/*Testing*/
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#coveredDistanceMetersMin, #coveredDistanceMetersMax {
+  width: 75%;
+  box-sizing: border-box;
 }
 
-.left, .right {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+input[type="number"] {
+  width: 25%;
+  box-sizing: border-box;
 }
 
-.left label, .right label {
-  margin-right: 10px;
+.no-gap {
+  gap: var(--spacing-mini);
+  
 }
 
+#error-message {
+  display: none;
+  color: var(--colors-error);
+}
+
+.button-big {
+  width: 40%;
+}
+
+.input-small {
+  min-width: 20px;
+  max-width: 40px;
+}

@@ -18,14 +18,16 @@
     --typography-fontSize-body: clamp(1rem, 2vw, 1.5rem);
     --typography-fontSize-large: clamp(2rem, 3vw, 3rem);
   
+    --spacing-mini: 2px;
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 32px;
+
     /*
     --breakpoints-small: 480px;
     --breakpoints-medium: 768px;
     --breakpoints-large: 1024px;
   
-    --spacing-small: 8px;
-    --spacing-medium: 16px;
-    --spacing-large: 32px;
   
     --borders-radius: 4px;
     --borders-style: solid;
