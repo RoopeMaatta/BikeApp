@@ -7,106 +7,130 @@
 <body>
   <button onclick="location.href='index.html'">Switch to index.html</button>
   <!--  -->
-  <h1>Bike Trips in Helsinki (2021.05.19 - .05.31)</h1>
+  <h1>Bike Trips in Helsinki (2021.05.30 - .05.31)</h1>
   
   <main class="grid-container">
     <!--Input Start-->
     <div class=" grid-container grid-item-full-width grid-item no-gap"> 
-    
-    <section id="stations" class="grid-item">
-      <h2>Stations</h2>
-      <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
-      <datalist id="departure-stations" > <!-- Populated dynamically --> </datalist>
-      <div id="departureStationIds" class="selectedStations"> <!-- Selected stations will appear here as tags --> </div>
       
-      <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
-      <datalist id="return-stations" > <!-- Populated dynamically --> </datalist>
-      <div id="returnStationIds" class="selectedStations"  > <!-- Selected stations will appear here as tags --> </div>
-    </section> <!--stations end-->
-    
-    <section id="date" class="grid-item">
-      <h2>Date</h2>
-      <div class="grid-container-inner">
-        <label for="departureDate" class="align-right" >Departure</label>
-        <input id="departureDate" class="align-left" type="date" min="2021-05-19" max="2021-05-31"   >
-        <label for="returnDate" class="align-right" >Return</label>
-        <input id="returnDate" class="align-left" type="date" min="2021-05-19" max="2021-05-31"  >
-      </div>
-    </section> <!--date end-->
-    
-    <section id="time" class="grid-item">
-      <h2>Time</h2>
-      <div class="grid-container-inner-3column">
-        <div></div>
-        <div class="align-right">
-          <span>Start</span>
-        </div>
-        <div class="align-left">
-          <span>End</span>
-        </div>
-        <span class="align-right">Departure</span>
-        <div class="align-right">
-          <input id="departureTimeMin" type="time" > 
-        </div>
-        <div class="align-left">
-          <input id="departureTimeMax" type="time" >
-        </div>
-        <span class="align-right">Return</span>
-        <div class="align-right">
-          <input id="returnTimeMin" type="time"  >
-        </div>
-        <div class="align-left">
-          <input id="returnTimeMax" type="time"  >
-        </div>
+      <section id="stations" class="grid-item">
+        <h2>Stations</h2>
+        <input id="departureStationInput" list="departure-stations" type="text" placeholder="Departure stations">
+        <datalist id="departure-stations" > <!-- Populated dynamically --> </datalist>
+        <div id="departureStationIds" class="selectedStations"> <!-- Selected stations will appear here as tags --> </div>
         
+        <input id="returnStationInput" list="return-stations" type="text" placeholder="Return stations">
+        <datalist id="return-stations" > <!-- Populated dynamically --> </datalist>
+        <div id="returnStationIds" class="selectedStations"  > <!-- Selected stations will appear here as tags --> </div>
+      </section> <!--stations end-->
+      
+      <section id="date" class="grid-item">
+        <h2>Date</h2>
+        <div class="grid-container-inner">
+          <label for="departureDate" class="align-right" >Departure</label>
+          <input id="departureDate" class="align-left" type="date" min="2021-05-19" max="2021-05-31"   >
+          <label for="returnDate" class="align-right" >Return</label>
+          <input id="returnDate" class="align-left" type="date" min="2021-05-19" max="2021-05-31"  >
+        </div>
+      </section> <!--date end-->
+      
+      <section id="time" class="grid-item">
+        <h2>Time</h2>
+        <div class="grid-container-inner-3column">
+          <div></div>
+          <div class="align-right">
+            <span>Start</span>
+          </div>
+          <div class="align-left">
+            <span>End</span>
+          </div>
+          <span class="align-right">Departure</span>
+          <div class="align-right">
+            <input id="departureTimeMin" type="time" > 
+          </div>
+          <div class="align-left">
+            <input id="departureTimeMax" type="time" >
+          </div>
+          <span class="align-right">Return</span>
+          <div class="align-right">
+            <input id="returnTimeMin" type="time"  >
+          </div>
+          <div class="align-left">
+            <input id="returnTimeMax" type="time"  >
+          </div>
+          
+        </div>
+      </section> <!--Time end-->
+      
+      <section id="distance-duration" class="grid-item">
+        <h2> Distance & Duration</h2>
+        <div class="grid-container-inner">
+          <div class="align-right">
+            <span>Minimum</span>
+          </div>
+          <div class="align-left">
+            <span>Maximum</span>
+          </div>
+          <div class="align-right">
+            <input id="coveredDistanceMetersMin" type="text" placeholder="Meters" >
+          </div>
+          <div class="align-left">
+            <input id="coveredDistanceMetersMax" type="text" placeholder="Meters">
+          </div>
+        </div> <!--Distance end-->
+        <div class="grid-container-inner">
+          <div class="align-right no-gap">
+            <input id="durationHoursMin" type="number" placeholder="h">
+            <input id="durationMinutesMin" type="number" placeholder="min">
+            <input id="durationSecondsMin" type="number" placeholder="s">
+          </div>
+          <div class="align-left no-gap" class="no-padding">
+            <input id="durationHoursMax" type="number" placeholder="h">
+            <input id="durationMinutesMax" type="number" placeholder="min">
+            <input id="durationSecondsMax" type="number" placeholder="s">
+          </div>
+        </div><!--Duration end-->
+      </section> <!--Distance Duration end-->
+      
+      
+      
+      <section id="search" class="grid-item grid-item-full-width">
+        
+        <div>
+        <label for="sortingField">Sort by:</label>
+          <select id="sortingField" multiple>
+            <option value="departureStationIds" selected>Departure Station</option>
+            <option value="departureDate">Departure Date</option>
+            <option value="departureTime">Departure Time</option>
+            <option value="returnStationIds">Return Station</option>
+            <option value="returnDate">Return Date</option>
+            <option value="returnTime">Return Time</option>
+            <option value="coveredDistanceMeters">Covered Distance</option>
+            <option value="duration">Duration</option>
+        </select>
+        </select>
+        
+        <label for="sortingOrder">Order:</label>
+        <select id="sortingOrder">
+          <option value="ASC">Ascending</option>
+          <option value="DESC">Descending</option>
+        </select>
       </div>
-    </section> <!--Time end-->
-    
-    <section id="distance-duration" class="grid-item">
-      <h2> Distance & Duration</h2>
-      <div class="grid-container-inner">
-        <div class="align-right">
-          <span>Minimum</span>
+
+        <div>
+        <button id="resetSearch" class="button-big" >reset</button>
+        <button id="findTripsButton" class="button-big">Find Trips</button> 
         </div>
-        <div class="align-left">
-          <span>Maximum</span>
-        </div>
-        <div class="align-right">
-          <input id="coveredDistanceMetersMin" type="text" placeholder="Meters" >
-        </div>
-        <div class="align-left">
-          <input id="coveredDistanceMetersMax" type="text" placeholder="Meters">
-        </div>
-      </div> <!--Distance end-->
-      <div class="grid-container-inner">
-        <div class="align-right no-gap">
-          <input id="durationHoursMin" type="number" placeholder="h">
-          <input id="durationMinutesMin" type="number" placeholder="min">
-          <input id="durationSecondsMin" type="number" placeholder="s">
-        </div>
-        <div class="align-left no-gap" class="no-padding">
-          <input id="durationHoursMax" type="number" placeholder="h">
-          <input id="durationMinutesMax" type="number" placeholder="min">
-          <input id="durationSecondsMax" type="number" placeholder="s">
-        </div>
-      </div><!--Duration end-->
-    </section> <!--Distance Duration end-->
-    
-    <section id="search" class="grid-item grid-item-full-width">
-    <div>
-      <button id="resetSearch" class="button-big" >reset</button>
-      <button id="findTripsButton" class="button-big">Find Trips</button> 
-    </div>
-    </section><!--Search end-->
-  
-  </div> <!--Input End-->
+      </section><!--Search end-->
+      
+    </div> <!--Input End-->
     
     <section id="error-message" class="grid-item grid-item-full-width">
       <!-- Dynamically populated and shown when error is catched-->
     </section> <!--Error message end-->
     
     
-  
+    
     <!-- 
       <section class="grid-item">7 Average Trip</section>
       <section class="grid-item">8 GraphTimexTrips</section>
@@ -134,7 +158,7 @@
     </section> <!--Pages end-->
     
     
-  
+    
   </main>
   
   

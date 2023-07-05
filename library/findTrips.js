@@ -48,15 +48,41 @@ const findTrips = async (req, res, next) => {
   if (departureStationIds) where.departureStationId = { [Op.in]: departureStationIds }; // Op.in any value within array of values
   if (returnStationIds) where.returnStationId = { [Op.in]: returnStationIds };
   
+
+
+  const createDateConstraint = (date, fieldName) => {
+    let dateFilter = db.sequelize.where(
+      db.sequelize.fn('date', db.sequelize.col(fieldName)),
+      date
+    );
+  
+    return dateFilter;
+  };
+  
+  // if (departureDate) {
+  //   let departureDateTime = new Date(departureDate).getTime() / 1000;  // convert to Unix timestamp
+  //   where.departureTime = { [Op.gte]: departureDateTime };
+  // }
+  
+  // if (returnDate) {
+  //   let returnDateTime = new Date(returnDate).getTime() / 1000; // convert to Unix timestamp
+  //   where.returnTime = { [Op.lte]: returnDateTime };
+  // }
+
   if (departureDate) {
-    let departureDateTime = new Date(departureDate).getTime() / 1000;  // convert to Unix timestamp
-    where.departureTime = { [Op.gte]: departureDateTime };
+    where[Op.and] = [
+      ...where[Op.and] || [],
+      createDateConstraint(departureDate, 'departureTime'),
+    ];
   }
   
   if (returnDate) {
-    let returnDateTime = new Date(returnDate).getTime() / 1000; // convert to Unix timestamp
-    where.returnTime = { [Op.lte]: returnDateTime };
+    where[Op.and] = [
+      ...where[Op.and] || [],
+      createDateConstraint(returnDate, 'returnTime'),
+    ];
   }
+  
   
   function getTimeInMinutes(time) {
     let [hours, minutes] = time.split(':');
@@ -140,6 +166,11 @@ const findTrips = async (req, res, next) => {
   const trips = await db.models.Biketrip.findAll({
     where,
     ...pagination,
+    order: [
+      [db.sequelize.literal('date(datetime(departureTime, \'unixepoch\'))'), 'ASC'],
+      [db.sequelize.literal('time(datetime(departureTime, \'unixepoch\'))'), 'DESC'],
+    ],
+
     attributes: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds'],
     include: [{
       model: db.models.Bikestation,
