@@ -167,8 +167,14 @@ const findTrips = async (req, res, next) => {
     where,
     ...pagination,
     order: [
-      [db.sequelize.literal('date(datetime(departureTime, \'unixepoch\'))'), 'ASC'],
-      [db.sequelize.literal('time(datetime(departureTime, \'unixepoch\'))'), 'DESC'],
+      // [ { model: db.models.Bikestation, as: 'DepartureStation' }, 'Nimi', 'ASC' ],
+       [db.sequelize.literal('date(datetime(departureTime, \'unixepoch\'))'), 'ASC'],
+       [db.sequelize.literal('time(datetime(departureTime, \'unixepoch\'))'), 'ASC'],
+      // [ { model: db.models.Bikestation, as: 'ReturnStation' }, 'Nimi', 'ASC' ],
+      // [db.sequelize.literal('date(datetime(returnTime, \'unixepoch\'))'), 'ASC'],
+      // [db.sequelize.literal('time(datetime(returnTime, \'unixepoch\'))'), 'ASC'],
+      // ['coveredDistanceMeters', 'ASC'],
+      // ['durationSeconds', 'ASC'],
     ],
 
     attributes: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds'],
