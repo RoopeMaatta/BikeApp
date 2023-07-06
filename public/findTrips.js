@@ -25,6 +25,8 @@ import { displayError, hideError } from './errorHandler.js';
     {id: 'durationSecondsMax', type: 'number', emptyValue: ''},
     {id: 'pageNumber', type: 'number', emptyValue: 1},
     {id: 'pageSize', type: 'number', emptyValue: 16},
+    {id: 'sortingField', type: 'array', emptyValue: 'departureDate', isTagContainer: false},
+    {id: 'sortingOrder', type: 'string', emptyValue: 'ASC', isTagContainer: false}
   ];
 
 

@@ -39,9 +39,12 @@ const findTrips = async (req, res, next) => {
     durationSecondsMin,
     durationHoursMax,
     durationMinutesMax,
-    durationSecondsMax
+    durationSecondsMax,
+    //sortingField,
+    sortingOrder, 
   } = req.query;
   
+  const sortingField = (req.query.sortingField) ? req.query.sortingField.split(',') : [];
   
   // Construct the where clause. {} to be filled with key-value pairs
   let where = {};
@@ -162,20 +165,48 @@ const findTrips = async (req, res, next) => {
   const paginationMetadata = await getPaginationMetadata(db.models.Biketrip, where, pageSize, pageNumber);
 
 
+   // Create an empty array for the order parameters
+   let order = [];
+   // Check if sorting parameters are provided
+   if (sortingField && sortingOrder) {
+     // Iterate over each sorting field
+     sortingField.forEach(field => {
+       // Based on the value of the field, push the correct order array
+       switch(field) {
+         case 'departureStationIds':
+           order.push([{ model: db.models.Bikestation, as: 'DepartureStation' }, 'Nimi', sortingOrder]);
+           break;
+         case 'departureDate':
+           order.push([db.sequelize.literal('date(datetime(departureTime, \'unixepoch\'))'), sortingOrder]);
+           break;
+         case 'departureTime':
+           order.push([db.sequelize.literal('time(datetime(departureTime, \'unixepoch\'))'), sortingOrder]);
+           break;
+         case 'returnStationIds':
+           order.push([{ model: db.models.Bikestation, as: 'ReturnStation' }, 'Nimi', sortingOrder]);
+           break;
+         case 'returnDate':
+           order.push([db.sequelize.literal('date(datetime(returnTime, \'unixepoch\'))'), sortingOrder]);
+           break;
+         case 'returnTime':
+           order.push([db.sequelize.literal('time(datetime(returnTime, \'unixepoch\'))'), sortingOrder]);
+           break;
+         case 'coveredDistanceMeters':
+           order.push(['coveredDistanceMeters', sortingOrder]);
+           break;
+         case 'duration':
+           order.push(['durationSeconds', sortingOrder]);
+           break;
+       }
+     });
+   }
+
+
   // Query the database with where object as conditions
   const trips = await db.models.Biketrip.findAll({
     where,
     ...pagination,
-    order: [
-      // [ { model: db.models.Bikestation, as: 'DepartureStation' }, 'Nimi', 'ASC' ],
-       [db.sequelize.literal('date(datetime(departureTime, \'unixepoch\'))'), 'ASC'],
-       [db.sequelize.literal('time(datetime(departureTime, \'unixepoch\'))'), 'ASC'],
-      // [ { model: db.models.Bikestation, as: 'ReturnStation' }, 'Nimi', 'ASC' ],
-      // [db.sequelize.literal('date(datetime(returnTime, \'unixepoch\'))'), 'ASC'],
-      // [db.sequelize.literal('time(datetime(returnTime, \'unixepoch\'))'), 'ASC'],
-      // ['coveredDistanceMeters', 'ASC'],
-      // ['durationSeconds', 'ASC'],
-    ],
+    order: order,
 
     attributes: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds'],
     include: [{
