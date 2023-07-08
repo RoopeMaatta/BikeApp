@@ -3,19 +3,29 @@ html {
   
 }
 
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
 h2, h3 {
   margin: var(--spacing-small) 0px var(--spacing-small) 0px;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1em;
   padding: 1em;
+  
 }
 
-/*Apply the following CSS rules when the viewport width is at least equal to the width of 4 columns with 3 gaps*/
-@media (min-width: calc(200px * 4 + 1rem * 3)) {
+/* Apply 2 column layout when the viewport width is at least equal to the width of 2 columns with 1 gap */
+@media (min-width: calc((250px * 3) + (1em * 1))) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
   #results > div {
     display: grid;
     grid-column: 1 / -1;
@@ -24,6 +34,12 @@ h2, h3 {
   }
 }
 
+/* Apply 4 column layout when the viewport width is at least equal to the width of 4 columns with 3 gaps */
+@media (min-width: calc((250px * 4) + (1em * 3))) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 
 .grid-container-inner {
   display: grid;
@@ -51,6 +67,7 @@ h2, h3 {
   var(--shadows-medium),
   var(--shadows-large);
   text-align: center;
+
 }
 
 
@@ -113,7 +130,7 @@ h2, h3 {
   box-sizing: border-box;
 }
 
-input[type="number"] {
+#duration input {
   width: 25%;
   box-sizing: border-box;
 }
@@ -131,6 +148,7 @@ input[type="number"] {
 #error-message {
   display: none;
   color: var(--colors-error);
+  border: 2px var(--colors-error);
 }
 
 .button-big {

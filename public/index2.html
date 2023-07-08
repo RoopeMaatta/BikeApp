@@ -3,13 +3,15 @@
 <head>
   <link rel="stylesheet" href="variables.css">
   <link rel="stylesheet" href="styles2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <button onclick="location.href='index.html'">Switch to index.html</button>
   <!--  -->
-  <h1>Bike Trips in Helsinki (2021.05.30 - .05.31)</h1>
+  
   
   <main class="grid-container">
+    <h1 class="grid-item-full-width">Bike Trips in Helsinki (2021.05.30 - .05.31)</h1>
     <!--Input Start-->
     <div class=" grid-container grid-item-full-width grid-item no-gap"> 
       
@@ -78,16 +80,16 @@
             <input id="coveredDistanceMetersMax" type="text" placeholder="Meters">
           </div>
         </div> <!--Distance end-->
-        <div class="grid-container-inner">
+        <div id="duration" class="grid-container-inner">
           <div class="align-right no-gap">
-            <input id="durationHoursMin" type="number" placeholder="h">
-            <input id="durationMinutesMin" type="number" placeholder="min">
-            <input id="durationSecondsMin" type="number" placeholder="s">
+            <input id="durationHoursMin" type="text" placeholder="h">
+            <input id="durationMinutesMin" type="text" placeholder="min">
+            <input id="durationSecondsMin" type="text" placeholder="s">
           </div>
           <div class="align-left no-gap" class="no-padding">
-            <input id="durationHoursMax" type="number" placeholder="h">
-            <input id="durationMinutesMax" type="number" placeholder="min">
-            <input id="durationSecondsMax" type="number" placeholder="s">
+            <input id="durationHoursMax" type="text" placeholder="h">
+            <input id="durationMinutesMax" type="text" placeholder="min">
+            <input id="durationSecondsMax" type="text" placeholder="s">
           </div>
         </div><!--Duration end-->
       </section> <!--Distance Duration end-->
@@ -121,6 +123,7 @@
         <button id="resetSearch" class="button-big" >reset</button>
         <button id="findTripsButton" class="button-big">Find Trips</button> 
         </div>
+        <div id="entryCount"></div>
       </section><!--Search end-->
       
     </div> <!--Input End-->
@@ -154,7 +157,6 @@
       </div>  
       <button id="prevPageButton" disabled>Previous Page</button>
       <button id="nextPageButton">Next Page</button>  
-      <div id="entryCount"></div>
     </section> <!--Pages end-->
     
     
