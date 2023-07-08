@@ -202,6 +202,7 @@ const findTrips = async (req, res, next) => {
    }
 
 
+
   // Query the database with where object as conditions
   const trips = await db.models.Biketrip.findAll({
     where,
@@ -255,8 +256,38 @@ const findTrips = async (req, res, next) => {
     delete tripData.ReturnStation;
     
     return tripData;
+
+    
   });
   
+
+// Average trip and upsfhit it to be first of prepared trips
+if (trips.length > 0) {
+// Find average trip details and departure/return station counts
+const averageTripDetails = await db.models.Biketrip.findOne({
+  where,
+  attributes: [
+    [db.Sequelize.fn('avg', db.Sequelize.col('departureTime')), 'avgDepartureTime'],
+    [db.Sequelize.fn('avg', db.Sequelize.col('returnTime')), 'avgReturnTime'],
+    [db.Sequelize.fn('avg', db.Sequelize.col('coveredDistanceMeters')), 'avgDistance'],
+    [db.Sequelize.fn('avg', db.Sequelize.col('durationSeconds')), 'avgDuration'],
+    [db.Sequelize.fn('count', db.Sequelize.fn('distinct', db.Sequelize.col('departureStationId'))), 'departureStationCount'],
+    [db.Sequelize.fn('count', db.Sequelize.fn('distinct', db.Sequelize.col('returnStationId'))), 'returnStationCount'],
+  ],
+  raw: true,
+});
+// Prepare average trip data
+let avgTrip = {
+  'departureTime': formatDate(Math.round(averageTripDetails.avgDepartureTime)),
+  'returnTime': formatDate(Math.round(averageTripDetails.avgReturnTime)),
+  'coveredDistanceMeters': averageTripDetails.avgDistance,
+  'durationSeconds': Math.round(averageTripDetails.avgDuration),
+  'departureStationName': averageTripDetails.departureStationCount > 1 ? 'Multiple stations' : preparedTrips[0].departureStationName,
+  'returnStationName': averageTripDetails.returnStationCount > 1 ? 'Multiple stations' : preparedTrips[0].returnStationName,
+};
+// Insert average trip at the beginning of the preparedTrips array
+preparedTrips.unshift(avgTrip);
+}
   
   console.log(`Found ${trips.length} trips.`);
   // console.log(jsonTrips);

@@ -3,7 +3,7 @@ html {
   
 }
 
-h2 {
+h2, h3 {
   margin: var(--spacing-small) 0px var(--spacing-small) 0px;
 }
 
@@ -148,3 +148,6 @@ input[type="number"] {
 }
 
 
+.average-trip {
+  border: 2px solid #cccccc;
+}

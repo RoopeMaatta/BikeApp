@@ -25,8 +25,8 @@ import { displayError, hideError } from './errorHandler.js';
     {id: 'durationSecondsMax', type: 'number', emptyValue: ''},
     {id: 'pageNumber', type: 'number', emptyValue: 1},
     {id: 'pageSize', type: 'number', emptyValue: 16},
-    {id: 'sortingField', type: 'array', emptyValue: 'departureDate', isTagContainer: false},
-    {id: 'sortingOrder', type: 'string', emptyValue: 'ASC', isTagContainer: false}
+    {id: 'sortingField', type: 'array', emptyValue: '', isTagContainer: false},
+    {id: 'sortingOrder', type: 'string', emptyValue: '', isTagContainer: false}
   ];
 
 
@@ -113,10 +113,21 @@ function fetchTrips() {
       resultsDiv.innerHTML = '';
       //console.log('formatData:', window.formatData);
 
-      data.data[0].forEach(item => {
-        let formattedItem = formatData(item);
-        resultsDiv.appendChild(formattedItem);
-      });
+      // data.data[0].forEach(item => {
+      //   let formattedItem = formatData(item);
+      //   resultsDiv.appendChild(formattedItem);
+      // });
+      if (data.data[0].length > 0) {
+        let formattedAverageTrip = formatData(data.data[0][0], true); // Pass true to indicate that this is the first item
+        resultsDiv.appendChild(formattedAverageTrip);
+          
+        for (let i = 1; i < data.data[0].length; i++) {
+          let formattedItem = formatData(data.data[0][i]);
+          resultsDiv.appendChild(formattedItem);
+        }
+      }
+
+
       //console.log('formatData:', window.formatData);
 
       let paginationMetadata = data.pagination;
@@ -149,6 +160,9 @@ function fetchTrips() {
     console.error('Error:', error);
   });
 };
+
+
+
 
 document.getElementById('resetSearch').addEventListener('click', resetSearch);
 function resetSearch() {
