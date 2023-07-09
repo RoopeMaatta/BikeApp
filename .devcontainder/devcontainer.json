@@ -1,0 +1,6 @@
+{
+    "name": "Bikeapp_Roope",
+    "image": "node:19",
+    "forwardPorts": [3000],
+    "extensions": ["dbaeumer.vscode-eslint"]
+}
