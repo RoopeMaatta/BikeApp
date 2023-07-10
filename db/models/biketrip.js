@@ -35,10 +35,15 @@ module.exports = (sequelize, DataTypes) => {
     {
         // Exclude the id column due optimization assumption - Primary key set to departure+return time&id
         
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        
         departureTime: {
           type: DataTypes.BIGINT,
           allowNull: false,
-          primaryKey: true,
           get() {
               const unixTimestamp = this.getDataValue('departureTime');
               return new Date(unixTimestamp * 1000);
@@ -57,7 +62,6 @@ module.exports = (sequelize, DataTypes) => {
       returnTime: {
           type: DataTypes.BIGINT,
           allowNull: false,
-          primaryKey: true,
           get() {
               const unixTimestamp = this.getDataValue('returnTime');
               return new Date(unixTimestamp * 1000);
@@ -78,7 +82,6 @@ module.exports = (sequelize, DataTypes) => {
           departureStationId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
           }, 
         // Ommited due to getting the same data from departureStationId + Bikestations table  
         //   departureStationName: {
@@ -88,7 +91,6 @@ module.exports = (sequelize, DataTypes) => {
           returnStationId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
           },
         // Ommited due to getting the same data from departureStationId + Bikestations table 
         //   returnStationName: {
@@ -125,6 +127,10 @@ module.exports = (sequelize, DataTypes) => {
             return rawValue.toISOString().slice(0, 19);
           },
         },
+        indexes: [{
+          unique: true,
+          fields: ['departureTime', 'returnTime', 'departureStationId', 'returnStationId', 'coveredDistanceMeters', 'durationSeconds']
+        }],
     }
     );
     return Biketrip
