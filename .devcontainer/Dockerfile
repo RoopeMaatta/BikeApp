@@ -2,11 +2,11 @@ FROM node:19
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY ../package*.json ./
 
 RUN npm i
 
-COPY . .
+COPY .. .
 
 ENV port=3000
 
