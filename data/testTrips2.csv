@@ -1,4 +1,9 @@
 Departure,Return,Departure station id,Departure station name,Return station id,Return station name,Covered distance (m),Duration (sec.)
+20Tomato€21-01-31T15:29:33,2021-01-31T16:17:19,022,Rautatientori / länsi,058,Lauttasaarensilta,3682,1121
+2022-02-31T15:29:33,2022-02-31T16:17:19,022,Rautatientori / länsi,058,Lauttasaarensilta,3682,1121,621
+2023-03-31T15:29:33,2023-03-31T16:17:19,022,Rautatientori / länsi,058,Lauttasaarensilta,3682
+2024-04-31T15:29:33,2024-04-31T16:17:19,022,Rautatientori / länsi,058,Lauttasaarensilta,368potato2,11tom21
+
 2021-05-31T22:58:45,2021-05-31T22:59:06,121,Vilhonvuorenkatu,121,Vilhonvuorenkatu,0,17
 2021-05-31T22:55:42,2021-05-31T22:56:03,262,Siilitie (M),262,Siilitie (M),0,17
 2021-05-31T15:29:39,2021-05-31T15:57:23,239,Viikin tiedepuisto,137,Arabian kauppakeskus,4623,1660
