@@ -43,7 +43,7 @@ const importData = async () => {
   try {
     const csvFiles = fs.readdirSync(dataFolder).filter(file => file.endsWith('.csv'));
     for (const file of csvFiles) {
-      if (file === 'bikeStations.csv' || file === "testTrips.csv" || file === "_testTrips2.csv" || file === "2021-05.csv" || file === "2021-06.csv"  || file === "2021-07.csv") {
+      if (file === 'bikeStations.csv' || file === "_testTrips.csv" || file === "_testTrips2.csv" || file === "2021-05.csv" || file === "2021-06.csv"  || file === "2021-07.csv") {
         console.log(`Skipping file: ${file}`);
         continue;
       }
@@ -196,9 +196,9 @@ const importData = async () => {
       });
       
       // After processing each file, write the summary to both log files
-      const summary = `SUMMARY OF ERRORS IN FILE ${file}\n` +
+      const summary = `SUMMARY OF UNIMPORTED ROWS IN FILE: ${file}\n` +
       Object.entries(errorCounts)
-        .map(([errorCategory, count]) => `${count} Errors found in category: ${errorCategory}\n`)
+        .map(([errorCategory, count]) => `${count} Rows with error category: ${errorCategory}\n`)
         .join('') + '\n';
       
       logStream.write(summary);
