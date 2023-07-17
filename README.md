@@ -11,11 +11,16 @@ With a redesign of the user interface and data displayed through an interactive 
 
 1. clone repository to local machine
 2. run in terminall: 
-3. npm i
-If you get a error, for example due to a different node version, run: npm rebuild
-4. node app.js
+    3. npm i
+    (If you get a error, for example due to a different node version, run: npm rebuild)
+    4. git lfs install
+    (installs large file storage for database)
+    5. git lfs pull
+    (pulls the database to be locally usable)
+    6. node app.js
+    (runs the app)
 
-5. And done -> start testing and using the project. 
+7. And done -> start testing and using the project. 
 
 
 
