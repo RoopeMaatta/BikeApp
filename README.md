@@ -9,8 +9,12 @@ With a redesign of the user interface and data displayed through an interactive 
 
 **How to run the project:**
 
+Before you begin, ensure you have Node.js installed on your machine. The project also uses Git Large File Storage (LFS) to handle large files, so you'll need to have that installed as well.
+
 1. clone repository to local machine
-2. run in terminall: 
+    - by downloading the files or running the following in your terminal:
+    - git lfs clone https://github.com/RoopeMaatta/BikeApp.git
+2. run in terminall:
     3. npm i
     (If you get a error, for example due to a different node version, run: npm rebuild)
     4. git lfs install
@@ -21,7 +25,6 @@ With a redesign of the user interface and data displayed through an interactive 
     (runs the app)
 
 7. And done -> start testing and using the project. 
-
 
 
 
