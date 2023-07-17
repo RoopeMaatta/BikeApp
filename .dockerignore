@@ -1,6 +1,7 @@
 node_modules
 .git
 .devcontainer
+/data/
 unimportedTripsSummary.log
 personalNotes.txt
 personalExperimenting.js
