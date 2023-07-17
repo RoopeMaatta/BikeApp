@@ -1,5 +1,6 @@
 node_modules/
-personalTesting.js
-personalNotes.txt
-scripts/unimportedTrips.log
 /data/
+personalNotes.txt
+personalExperimenting.js
+scripts/unimportedTripsSummary.log
+scripts/unimportedTrips.log

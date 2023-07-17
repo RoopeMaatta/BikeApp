@@ -10,6 +10,7 @@ const BATCH_SIZE = 50;
 
 const importData = async () => {
   const logStream = fs.createWriteStream(path.join(__dirname, 'unimportedTrips.log'), { flags: 'a' });
+  const summaryLogStream = fs.createWriteStream(path.join(__dirname, 'unimportedTripsSummary.log'), { flags: 'a' });
   
   // Get all bike station IDs for foreign key check
   const bikeStationRecords = await db.models.Bikestation.findAll({ attributes: ['ID'] });
@@ -42,11 +43,12 @@ const importData = async () => {
   try {
     const csvFiles = fs.readdirSync(dataFolder).filter(file => file.endsWith('.csv'));
     for (const file of csvFiles) {
-      if (file === 'bikeStations.csv' || file === "testTrips.csv" || file === "testTrips2xxx.csv" || file === "2021-05.csv") {
+      if (file === 'bikeStations.csv' || file === "testTrips.csv" || file === "_testTrips2.csv" || file === "2021-05.csv" || file === "2021-06.csv"  || file === "2021-07.csv") {
         console.log(`Skipping file: ${file}`);
         continue;
       }
       
+      const errorCounts = {};
       const filePath = path.join(dataFolder, file);
       
       await new Promise((resolve, reject) => {
@@ -71,29 +73,16 @@ const importData = async () => {
         
         csvStream
         .on('data', (dataRow) => {
-          // const row = {
-          //   departureTime: new Date(dataRow['Departure']),
-          //   returnTime: new Date(dataRow['Return']),
-          //   departureStationId: parseInt(dataRow['Departure station id']),
-          //   returnStationId: parseInt(dataRow['Return station id']),
-          //   coveredDistanceMeters: parseInt(dataRow['Covered distance (m)']),
-          //   durationSeconds: parseInt(dataRow['Duration (sec.)']),
-          // };
           const row = {
             departureTime: new Date(dataRow['Departure']),
             returnTime: new Date(dataRow['Return']),
             departureStationId: Number(dataRow['Departure station id']),
             returnStationId: Number(dataRow['Return station id']),
-            coveredDistanceMeters: Number(dataRow['Covered distance (m)']),
+            coveredDistanceMeters: Math.round(Number(dataRow['Covered distance (m)'])),
             durationSeconds: Number(dataRow['Duration (sec.)']),
           };
           
           
-          // check for invalid Date
-          if (row.departureTime.toString() === 'Invalid Date' || row.returnTime.toString() === 'Invalid Date') {
-            logStream.write(`Invalid date: ${JSON.stringify(row)}\n`);
-            return;
-          }
           
           
           // Check for missing data
@@ -119,10 +108,9 @@ const importData = async () => {
             if (dataRowColumns.length !== expectedColumns.length) {
               return true;
             }
-          
+            
             return false;
           };
-          
           
           // Check for faulty data
           const isFaultyData = (row) => {
@@ -133,20 +121,23 @@ const importData = async () => {
             return false;
           };
           
-          
+          // Error checking
           errorCategory = null;
           let isValidRow = true;
-          if (hasIncorrectColumnCount(dataRow)) {
-            errorCategory = 'Extra or missing column data';
-            isValidRow = false;
-          } else if (isCoveredDistanceOrDurationTooSmall(row)) {
-            errorCategory = 'Distance or Duration < 10';
+          if (row.departureTime.toString() === 'Invalid Date' || row.returnTime.toString() === 'Invalid Date') {
+            errorCategory = 'Invalid date';
             isValidRow = false;
           } else if (isDuplicateFields(row)) {
             errorCategory = 'Trip already in database';
             isValidRow = false;
+          } else if (isCoveredDistanceOrDurationTooSmall(row)) {
+            errorCategory = 'Distance or Duration < 10';
+            isValidRow = false;
           } else if (isForeignKeyInvalid(row)) {
             errorCategory = 'Depart- or Returnstation ID not in Bikestations ID-list';
+            isValidRow = false;
+          } else if (hasIncorrectColumnCount(dataRow)) {
+            errorCategory = 'Extra or missing column data';
             isValidRow = false;
           } else if (isDataMissing(row)) {
             errorCategory = 'Missing column data';
@@ -156,12 +147,15 @@ const importData = async () => {
             isValidRow = false;
           }
           
+          
           if (isValidRow) {
             rowsBatch.push(row);
           } else if (errorCategory) {
             logStream.write(`${errorCategory}: ${JSON.stringify(row)}\n`);
+            errorCounts[errorCategory] = (errorCounts[errorCategory] || 0) + 1;
           } else {
             logStream.write(`Unknown error: ${JSON.stringify(row)}\n`);
+            errorCounts['Unknown error'] = (errorCounts['Unknown error'] || 0) + 1;
           }
           
           
@@ -179,6 +173,7 @@ const importData = async () => {
             .catch(err => {
               console.error(err);
               logStream.write(`other error: ${JSON.stringify(rowsBatch)}\n`);
+              errorCounts['other error'] = (errorCounts['other error'] || 0) + 1;
               rowsBatch = [];
               csvStream.resume(); // resume reading even if there was an error
             });
@@ -199,11 +194,24 @@ const importData = async () => {
         })
         .on('error', reject);
       });
+      
+      // After processing each file, write the summary to both log files
+      const summary = `SUMMARY OF ERRORS IN FILE ${file}\n` +
+      Object.entries(errorCounts)
+        .map(([errorCategory, count]) => `${count} Errors found in category: ${errorCategory}\n`)
+        .join('') + '\n';
+      
+      logStream.write(summary);
+      summaryLogStream.write(summary);
+      
+      
     }
   } catch (err) {
     console.error(err);
   } finally {
+    
     logStream.end();
+    summaryLogStream.end();
   }
 };
 
