@@ -5,6 +5,18 @@
 import { formatData } from './formatData.js';
 import { displayError, hideError } from './errorHandler.js';
 
+
+function formatBigNumber(num) {
+  if (num >= 1000000) {
+      return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  }
+  if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  }
+  return num;
+}
+
+
   // Gather user input into params object
   let inputs = [
     {id: 'departureStationIds', type: 'array', emptyValue: '', isTagContainer: true},
@@ -135,7 +147,7 @@ function fetchTrips() {
       // Update the entry count div
       let start = paginationMetadata.pageSize * (paginationMetadata.currentPage - 1) + 1;
       let end = Math.min(start + paginationMetadata.pageSize - 1, paginationMetadata.totalRecords);
-      entryCountDiv.textContent = `Showing ${start}-${end} of ${paginationMetadata.totalRecords} entries`;
+      entryCountDiv.textContent = `Showing ${start}-${end} of ${formatBigNumber(paginationMetadata.totalRecords)} entries`;
       
       // Maximum number of pages
       let maxPageNumber = Math.ceil(paginationMetadata.totalRecords / end)
