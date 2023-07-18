@@ -2,19 +2,10 @@
 * Description: Set user input to use the fetchtrips api
 */
 
-import { formatData } from './formatData.js';
+import { formatData, formatBigNumber } from './formatData.js';
 import { displayError, hideError } from './errorHandler.js';
 
 
-function formatBigNumber(num) {
-  if (num >= 1000000) {
-      return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-  }
-  if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-  }
-  return num;
-}
 
 
   // Gather user input into params object

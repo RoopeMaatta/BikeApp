@@ -13,7 +13,7 @@
     --shadows-medium: -2px 1px 6px rgba(150,150, 150, 0.2);
     --shadows-large: 0px 0px 50px rgba(100, 100, 100, 0.05);
   
-   /* --typography-fontFamily: 'Roboto', sans-serif; */
+    --typography-fontFamily: 'Figtree', sans-serif; 
     --typography-fontSize-small: clamp(0.9rem, 1vw, 1rem);
     --typography-fontSize-body: clamp(1rem, 2vw, 1.5rem);
     --typography-fontSize-large: clamp(2rem, 3vw, 3rem);

@@ -1,6 +1,6 @@
 html {
   font-size: 16px; /* Specify your desired font size */
-  
+  font-family: var(--typography-fontFamily);
 }
 
 main {
